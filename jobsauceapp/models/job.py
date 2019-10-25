@@ -8,7 +8,7 @@ class Job(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title_of_position = models.CharField(max_length=100)
-    company = models.ForeignKey(Company, on_delete=models.DO_NOTHING)
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name="Co")
     tech_list = models.ForeignKey(Tech_Type, on_delete=models.CASCADE)
     date_of_submission = models.DateField(auto_now_add=True, blank=True)
 
@@ -20,5 +20,5 @@ class Job(models.Model):
         return self.name
     
     def get_absolute_url(self):
-        return reverse("Job_detail", kwargs={"pk": self.pk})
+        return reverse("job_detail", kwargs={"pk": self.pk})
     

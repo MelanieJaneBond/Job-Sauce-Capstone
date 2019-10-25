@@ -3,8 +3,7 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from .job import Job
 
-
-class Reponse(models.Model):
+class Response(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     job = models.ForeignKey(Job, on_delete=models.CASCADE)

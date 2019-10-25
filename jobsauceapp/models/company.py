@@ -1,15 +1,13 @@
 from django.db import models
-from django.utils import timezone
-from .job import Job
 
 class Company(models.Model):
 
-    job = models.ForeignKey(Job, on_delete=models.DO_NOTHING)
+    job = models.ForeignKey('Job', on_delete=models.CASCADE, related_name="Co")
     name = models.CharField(max_length=100)
 
     class Meta:
         verbose_name = ("company")
-        verbose_name_plural = ("company")
+        verbose_name_plural = ("companies")
 
     def __str__(self):
         return self.name
