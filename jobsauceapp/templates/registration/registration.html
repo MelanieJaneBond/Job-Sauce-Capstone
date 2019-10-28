@@ -1,0 +1,21 @@
+{% extends 'shared/base.html' %}
+
+{% block content %}
+    <h1>Register</h1>
+
+    <form action="{% url 'libraryapp:register' %}" method="post">
+        <fieldset>
+            <label for="username">Username: </label>
+            <input id="username" type="text" name="username" value="admina">
+        </fieldset>
+
+        <fieldset>
+            <label for="password">Password: </label>
+            <input id="password" type="password" name="password" value="Admin8*">
+        </fieldset>
+
+        <input type="submit" value="Register" />
+
+    </form>
+
+{% endblock %}
