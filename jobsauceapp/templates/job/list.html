@@ -1,0 +1,23 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>List of Jobs you've applied to!</title>
+  </head>
+  <body>
+    <h1>Jobs you have applied for:</h1>
+
+    <ol>
+    {% for job in all_jobs %}
+        <li>
+            {{ job.company_name }}
+            {{ job.title_of_position }}
+            {{ job.name }}
+            You submitted this application on {{ job.date_of_submission }}.
+            Have you heard back yet? {{ job.is_rejected }}
+        </li>
+    {% endfor %}
+    </ol>
+  </body>
+</html>
