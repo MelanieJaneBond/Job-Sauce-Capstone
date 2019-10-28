@@ -28,7 +28,6 @@ def job_list(request):
 
             for row in dataset:
                 job = Job()
-                job.id = row['id']
                 job.company_name = row['company_name']
                 job.title_of_position = row['title_of_position']
                 job.name = row['name']
@@ -37,7 +36,7 @@ def job_list(request):
 
                 all_jobs.append(job)
 
-        template = 'jobs/list.html'
+        template = 'job/list.html'
         context = {
             'all_jobs': all_jobs
         }
