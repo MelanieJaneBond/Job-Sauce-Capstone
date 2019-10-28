@@ -11,7 +11,7 @@ class Study_Resource(models.Model):
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
     tech_type = models.ForeignKey(Tech_Type, on_delete=models.CASCADE)
     date_due = models.DateField(auto_now_add=True, blank=True)
-    is_complete = models.BooleanField()
+    is_complete = models.BooleanField(initial=False)
 
     class Meta:
         verbose_name = ("study_resource")
