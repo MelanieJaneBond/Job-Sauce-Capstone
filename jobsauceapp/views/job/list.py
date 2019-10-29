@@ -16,7 +16,7 @@ def job_list(request):
             db_cursor.execute("""
             select
                 c.name as company_name, j.title_of_position, tt.name, j.date_of_submission, r.is_rejected
-                from jobsauceapp_job j
+                from jobsauceapp_job j 
                 left join jobsauceapp_company c on j.company_id = c.id
                 left join jobsauceapp_response r on r.job_id = j.id
                 left join jobsauceapp_job_tech jt on j.id = jt.job_id
