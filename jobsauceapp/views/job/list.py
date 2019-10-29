@@ -1,16 +1,16 @@
 import sqlite3
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse
 from jobsauceapp.models import Job, Company, Tech_Type, Job_Tech
 from ..connection import Connection
 
 def create_job_listing(cursor, row):
-    _row = sqlite3.Row(cursor, row)
+    row = sqlite3.Row(cursor, row)
 
     job = Job()
     job.company_name = row[0]
     job.title_of_position = row[1]
     job.date_of_submission = row[3]
-    job.is_rejected = row[4]
     job.tech_types = []
 
     tech_type = Tech_Type()
@@ -26,7 +26,7 @@ def job_list(request):
 
             db_cursor.execute("""
             select
-                c.name as company_name, j.title_of_position, tt.name, j.date_of_submission, r.is_rejected
+                c.name as company_name, j.title_of_position, tt.name, j.date_of_submission
                 from jobsauceapp_job j 
                 left join jobsauceapp_company c on j.company_id = c.id
                 left join jobsauceapp_response r on r.job_id = j.id

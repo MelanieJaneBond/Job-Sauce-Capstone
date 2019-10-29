@@ -1,0 +1,32 @@
+{% extends 'shared/base.html' %}
+
+{% block content %}
+    <h1>Enter a Job You've Applied to:</h1>
+
+
+    <form action="{% url 'libraryapp:books' %}" method="post">
+      {% csrf_token %}
+      <fieldset>
+          <label for="company_name">Company Name: </label>
+          <input id="title" type="text" name="title">
+      </fieldset>
+      <fieldset>
+          <label for="title_of_position">Title of Position: </label>
+          <input id="author" type="text" name="author">
+      </fieldset>
+      {% comment %} <fieldset>
+          <label for="tech">Library: </label>
+          <select id="tech" type="text" name="tech">
+                {% for library in all_libraries %}
+                    <option value="{{ library.id }}">{{ library.title }}</option>
+                {% endfor %}
+          </select>
+      </fieldset> {% endcomment %}
+      <fieldset>
+          <label for="date_of_apply">Date you Applied: </label>
+          <input id="date_of_apply" type="date" name="date_of_apply">
+      </fieldset>
+
+      <input type="submit" value="Add It" />
+    </form>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>JobSauceApp</title>
+
+    <link rel="stylesheet" href="{% static 'styles/base.css' %}" />
+
+    {% block css %}
+    {% endblock %}
+</head>
+
+<body>
+
+    <nav id="site-nav">
+        <ol class="navList">
+            <li class="navList__route"><a href="{% url 'jobsauceapp:home' %}">Home</a></li>
+            <li class="navList__route"><a href="{% url 'jobsauceapp:jobs' %}">Jobs</a></li>
+            <li class="navList__route"><a href="{% url 'jobsauceapp:register'%}">Register</a></li>
+            <li class="navList__route"><a href="{% url 'jobsauceapp:responses'%}">Responses from Potential Employers</a></li>
+            {% comment %} <li class="navList__route"><a href="{% url 'jobsauceapp:responses' %}">Books</a></li>
+            <li class="navList__route"><a href="{% url 'jobsauceapp:studystuffs' %}">Librarians</a></li>
+            <li class="navList__route"><a href="{% url 'jobsauceapp:logout' %}">Logout</a></li> {% endcomment %}
+        </ol>
+    </nav>
+
+    <main class="main-content">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    {% block scripts %}
+    {% endblock %}
+</body>
+
+</html>
