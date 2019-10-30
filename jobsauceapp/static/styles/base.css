@@ -1,8 +1,14 @@
+
+
 body {
     margin: 0;
     padding: 0;
     font-size: 1.5em;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: 'Poiret One', cursive;
+}
+
+h2 {
+    font-family: 'Saira Condensed', sans-serif;
 }
 
 .main-content {
@@ -12,6 +18,7 @@ body {
 .navList {
     list-style-type: none;
     display: flex;
+    justify-content: center;
     border: 1px solid lightgray;
     padding: 1em;
     margin: 0;
@@ -19,4 +26,5 @@ body {
 
 .navList__route {
     margin: 0 0.5em;
+    font-family: 'Saira Condensed', sans-serif;
 }

@@ -26,7 +26,10 @@ def job_list(request):
 
             db_cursor.execute("""
             select
-                c.name as company_name, j.title_of_position, tt.name, j.date_of_submission
+                c.name as company_name, 
+                j.title_of_position, 
+                tt.name, 
+                j.date_of_submission
                 from jobsauceapp_job j 
                 left join jobsauceapp_company c on j.company_id = c.id
                 left join jobsauceapp_response r on r.job_id = j.id
@@ -38,7 +41,7 @@ def job_list(request):
             job_technologies = {}
 
             for (job, tech_type) in jobs:
-                if job.title_of_position not in jobs:
+                if job.title_of_position not in job_technologies:
                     job_technologies[job.title_of_position] = job
                     job_technologies[job.title_of_position].tech_types.append(tech_type)
                 else:

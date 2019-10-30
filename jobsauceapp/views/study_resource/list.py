@@ -4,26 +4,26 @@ from django.urls import reverse
 from jobsauceapp.models import Company, Tech_Type, Study_Resource
 from ..connection import Connection
 
-def create_listing(cursor, row):
-    row = sqlite3.Row(cursor, row)
+# def create_listing(cursor, row):
+#     row = sqlite3.Row(cursor, row)
 
-    company = Company()
-    company.company_name = row[0]
+#     company = Company()
+#     company.company_name = row[0]
 
-    study_re = Study_Resource()
-    study_re.link_to_resource = row[1]
-    study_re.date_due = row[2]
-    study_re.is_complete = row[3]
+#     study_re = Study_Resource()
+#     study_re.link_to_resource = row[1]
+#     study_re.date_due = row[2]
+#     study_re.is_complete = row[3]
 
-    tech_type = Tech_Type()
-    tech_type.tech_name = row[4]
+#     tech_type = Tech_Type()
+#     tech_type.tech_name = row[4]
 
-    return (company, study_re, tech_type)
+#     return (company, study_re, tech_type)
 
 def study_resource_list(request):
     if request.method == 'GET':
         with sqlite3.connect(Connection.db_path) as conn:
-            conn.row_factory = create_listing
+            conn.row_factory = sqlite3.Row
             db_cursor = conn.cursor()
 
             db_cursor.execute("""
@@ -35,7 +35,17 @@ def study_resource_list(request):
                 order by date_due
             """)
 
-            resources = db_cursor.fetchall()
+            resources = []
+            dataset = db_cursor.fetchall()
+
+            for row in dataset:
+                resource = Study_Resource()
+                resource.link_to_resource = row['link_to_resource']
+                resource.date_due = row['date_due']
+                resource.is_complete = row['is_complete']
+                resource.tech_name = row['tech_name']
+
+                resources.append(resource)
 
         template = 'study_resource/list.html'
         context = {

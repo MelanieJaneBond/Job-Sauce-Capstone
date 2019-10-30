@@ -1,17 +1,16 @@
 {% extends 'shared/base.html' %}
 
 {% block content %}
-    <h1>Study Resources</h1>
+    <h2>Study Resources</h2>
 
     {% comment %} <a href="{% url 'libraryapp:library_form' %}">Add Library</a> {% endcomment %}
     <ol>
 
         {% for resource in all_resources %}
             <h4>{{ resource.company_name }}</h4>
-            <p><a href="{{resource.link_to_resource}}">Click to visit a Study Resource</a></p>
+            <p><a href="{{resource.link_to_resource}}">Click to Study {{resource.tech_name}}</a></p>
             <h5> {{ resource.due_date }} </h5>
             <h6> Did you read/watch/do it yet? "{{ resource.is_complete }}" </h6>
-            <h4> {{ resource.tech_name }} </h4>
 
         {% endfor %}
         <br></br>

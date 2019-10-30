@@ -1,12 +1,12 @@
 {% extends 'shared/base.html' %}
 
 {% block content %}
-    <h1>Jobs you have applied for:</h1>
+    <h2>Jobs you have applied for:</h2>
 
     <ol>
     {% for job in all_jobs %}
         <h4> {{ job.company_name }} </h4>
-        <h3> {{ job.title_of_position }} </h3>
+        <p><strong> {{ job.title_of_position }} </strong></p>
         <ul>
             {% for tech_type in job.tech_types %}
                 <li>{{ tech_type.name }}</li>
