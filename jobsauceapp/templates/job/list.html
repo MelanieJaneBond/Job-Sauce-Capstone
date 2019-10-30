@@ -1,11 +1,6 @@
-{% load staticfiles %}
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>List of Jobs you've applied to!</title>
-  </head>
-  <body>
+{% extends 'shared/base.html' %}
+
+{% block content %}
     <h1>Jobs you have applied for:</h1>
 
     <ol>
@@ -22,5 +17,4 @@
         <br></br>
     {% endfor %}
     </ol>
-  </body>
-</html>
+{% endblock %}

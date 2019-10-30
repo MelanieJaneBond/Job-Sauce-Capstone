@@ -7,12 +7,9 @@
     <ol>
 
         {% for response in all_responses %}
-            <li>
-                <h4> {{ response.name }} </h4>
-                <h3> {{ response.title_of_position }} </h3>
-                <h4> {{ response.details }} </h4>
-                <h4> {{ response.date }} </h4>
-            </li>
+            <h4>From {{ response.name }},</h4>
+            <p>Regarding your application to the position of <strong>{{ response.title_of_position }}:</strong> "{{ response.details }}"</p>
+            <h5> {{ response.date }} </h5>
 
         {% endfor %}
         <br></br>

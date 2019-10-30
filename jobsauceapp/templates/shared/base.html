@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>JobSauceApp</title>
+    <title>Get the Job Sauce!</title>
 
     <link rel="stylesheet" href="{% static 'styles/base.css' %}" />
 
@@ -16,10 +16,10 @@
 
     <nav id="site-nav">
         <ol class="navList">
-            <li class="navList__route"><a href="{% url 'jobsauceapp:home' %}">Home</a></li>
             <li class="navList__route"><a href="{% url 'jobsauceapp:jobs' %}">Jobs</a></li>
+            <li class="navList__route"><a href="{% url 'jobsauceapp:responses'%}">Responses</a></li>
+            <li class="navList__route"><a href="{% url 'jobsauceapp:home' %}">GetTheJobSauce</a></li>
             <li class="navList__route"><a href="{% url 'jobsauceapp:register'%}">Register</a></li>
-            <li class="navList__route"><a href="{% url 'jobsauceapp:responses'%}">Responses from Potential Employers</a></li>
             {% comment %} <li class="navList__route"><a href="{% url 'jobsauceapp:responses' %}">Books</a></li>
             <li class="navList__route"><a href="{% url 'jobsauceapp:studystuffs' %}">Librarians</a></li>
             <li class="navList__route"><a href="{% url 'jobsauceapp:logout' %}">Logout</a></li> {% endcomment %}
