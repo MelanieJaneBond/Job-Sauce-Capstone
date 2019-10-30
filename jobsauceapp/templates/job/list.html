@@ -8,8 +8,8 @@
         <h4> {{ job.company_name }} </h4>
         <h3> {{ job.title_of_position }} </h3>
         <ul>
-            {% for each in job.tech_types %}
-                <li>{{ each.name }}</li>
+            {% for tech_type in job.tech_types %}
+                <li>{{ tech_type.name }}</li>
             {% endfor %}
         </ul>
 
