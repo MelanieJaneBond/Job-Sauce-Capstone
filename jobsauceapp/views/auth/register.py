@@ -14,7 +14,7 @@ def register_user(request):
       request -- The full HTTP request object
     '''
     if request.method == "GET":
-        template_name = 'registration/register.html'
+        template_name = 'auth/register.html'
         return render(request, template_name, {})
 
     elif request.method == "POST":
@@ -32,7 +32,7 @@ def register_user(request):
         # If authentication was successful, log the user in
         if authenticated_user is not None:
             login(request=request, user=authenticated_user)
-            return redirect(reverse('libraryapp:books'))
+            return redirect(reverse('jobsauceapp:job'))
 
         else:
             # Bad login details were provided. So we can't log the user in.

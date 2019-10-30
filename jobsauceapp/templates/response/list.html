@@ -1,0 +1,17 @@
+{% extends 'shared/base.html' %}
+
+{% block content %}
+    <h2>Responses</h2>
+
+    {% comment %} <a href="{% url 'libraryapp:library_form' %}">Add Library</a> {% endcomment %}
+    <ol>
+
+        {% for response in all_responses %}
+            <h4>From {{ response.name }},</h4>
+            <p>Regarding your application to the position of <strong>{{ response.title_of_position }}:</strong> "{{ response.details }}"</p>
+            <h5> {{ response.date }} </h5>
+
+        {% endfor %}
+        <br></br>
+    </ol>
+{% endblock %}
