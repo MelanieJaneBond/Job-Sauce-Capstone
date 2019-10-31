@@ -9,24 +9,14 @@
             <h4>From {{ response.name }},</h4>
             <p>Regarding your application to the position of <strong>{{ response.title_of_position }}:</strong> "{{ response.details }}"</p>
             <h5> {{ response.date }} </h5>
-    <section id="response-record-actions" style="display:flex;">
-        <form action="{% url 'jobsauceapp:response_details' response.id %}" method="POST">
-            {% csrf_token %}
-            <input type="hidden" name="actual_method" value="DELETE">
-            <button>Delete</button>
-        </form>
-    </section>
-
+            <section id="response-record-actions" style="display:flex;">
+                <form action="{% url 'jobsauceapp:response_details' response.id %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="actual_method" value="DELETE">
+                    <button>Delete</button>
+                </form>
+            </section>
         {% endfor %}
-
-{% comment %} 
-{% if response.id is not None %}
-            <input type="hidden" name="actual_method" value="PUT">
-            <input type="submit" value="Update" />
-        {% else %}
-            <input type="submit" value="Create" />
-        {% endif %} {% endcomment %}
-
-        <br></br>
+    <br></br>
     </ol>
 {% endblock %}

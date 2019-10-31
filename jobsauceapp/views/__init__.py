@@ -8,4 +8,5 @@ from .response.list import response_list
 from .response.form import response_form, response_edit_form
 from .response.detail import response_details
 
-from .study_resource.list import study_resource_list
+from .resource.list import resource_list
+from .resource.detail import resource_details

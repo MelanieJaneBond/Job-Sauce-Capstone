@@ -3,7 +3,6 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from jobsauceapp.models import Job, Company, Response
 from ..connection import Connection
-# from django.utils.datastructures import MultiValueDictKeyError
 
 def response_list(request):
     if request.method == 'GET':
@@ -54,17 +53,3 @@ def response_list(request):
                 form_data['job_id'], request.user.id, form_data["details"]))
 
         return redirect(reverse('jobsauceapp:responses'))
-
-        # if (
-        #     "actual_method" in form_data
-        #     and form_data["actual_method"] == "DELETE"
-        # ):
-        #     with sqlite3.connect(Connection.db_path) as conn:
-        #         db_cursor = conn.cursor()
-
-        #         db_cursor.execute("""
-        #             DELETE FROM jobsauceapp_response
-        #             WHERE id = ?
-        #         """, (id,))
-
-        #     return redirect(reverse('jobsauceapp:responses'))

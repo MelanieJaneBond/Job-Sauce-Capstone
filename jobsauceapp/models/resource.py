@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from .company import Company
 from .tech_type import Tech_Type
 
-class Study_Resource(models.Model):
+class Resource(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     link_to_resource = models.URLField(max_length=250, blank=True)
@@ -14,12 +14,12 @@ class Study_Resource(models.Model):
     is_complete = models.BooleanField(default=False, blank=True)
 
     class Meta:
-        verbose_name = ("study_resource")
-        verbose_name_plural = ("study_resources")
+        verbose_name = ("resource")
+        verbose_name_plural = ("resources")
 
     def __str__(self):
         return self.name
     
     def get_absolute_url(self):
-        return reverse("study_resource_detail", kwargs={"pk": self.pk})
+        return reverse("resource_details", kwargs={"pk": self.pk})
     
