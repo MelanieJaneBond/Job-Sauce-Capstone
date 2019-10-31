@@ -15,9 +15,15 @@
                 {% for job in all_jobs %}
                 <option {{ job.title_of_position }} selected value="{{ job.id }}">
                 {{ job.title_of_position }}</option>
+                {% endfor %}
             </select>
+{% comment %} STEVE OR SOMEONE: I'd like to only show the list of technologies AFTER a job is selected. How can I do that? {% endcomment %}
+{% comment %} Another idea I've had it that I could just have the jobs list appear as it does on the job list page and I could put the "create study resource"
+form under each job title... perhaps that would visually connect the two objects "job" and "topic to study". {% endcomment %}
             <label for="tech_type_id">Technology to Study: </label>
             <select id="tech_type_id" type="text" name="tech_type_id">
+                    {% for job in all_jobs %}
+                    {% if job.title_of_position%}
                     {% for tech_type in job.tech_types %}
                     <option {{ tech_type.name }} selected value="{{tech_type.tech_type_id}}">
                     {{ tech_type.name }}</option>
