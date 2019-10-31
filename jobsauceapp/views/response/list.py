@@ -66,4 +66,4 @@ def response_list(request):
                     WHERE id = ?
                 """, (id,))
 
-            return redirect(reverse('libraryapp:libraries'))
+            return redirect(reverse('jobsauceapp:responses'))
