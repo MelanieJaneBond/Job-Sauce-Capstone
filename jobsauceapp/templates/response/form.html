@@ -27,9 +27,9 @@
             <input id="date" type="text" name="date" value="{{ response.date }}">
         </fieldset>
     
-        <fieldset>
+        {% comment %} <fieldset>
             <input id="is_rejected" type="text" name="is_rejected" value="False">
-        </fieldset>
+        </fieldset> {% endcomment %}
 
         {% if response.id is not None %}
             <input type="hidden" name="actual_method" value="PUT">
