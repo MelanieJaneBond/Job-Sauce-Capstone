@@ -17,7 +17,7 @@ def response_list(request):
                 from jobsauceapp_job j 
                 join jobsauceapp_company c on c.job_id = j.id
                 join jobsauceapp_response r on j.id = r.job_id
-                order by r.date
+                order by r.date DESC
             """)
 
             responses = []
@@ -53,3 +53,17 @@ def response_list(request):
                 form_data['job_id'], request.user.id, form_data["details"]))
 
         return redirect(reverse('jobsauceapp:responses'))
+
+        if (
+            "actual_method" in form_data
+            and form_data["actual_method"] == "DELETE"
+        ):
+            with sqlite3.connect(Connection.db_path) as conn:
+                db_cursor = conn.cursor()
+
+                db_cursor.execute("""
+                    DELETE FROM jobsauceapp_response
+                    WHERE id = ?
+                """, (id,))
+
+            return redirect(reverse('libraryapp:libraries'))

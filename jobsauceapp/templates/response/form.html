@@ -3,7 +3,7 @@
 {% block content %}
     <h2>Response Record</h2>
 
-    {% if user.id is not None %}
+    {% if response.id is not None %}
         <form action="{% url 'jobsauceapp:response' response.id %}" method="post">
     {% else %}
         <form action="{% url 'jobsauceapp:responses' %}" method="post">
@@ -17,6 +17,8 @@
                     {{ job.title_of_position }}</option>
                 {% endfor %}
             </select>
+        </fieldset>
+        <fieldset>
             <label for="details">What did they say?</label>
             <input id="details" type="text" name="details" value="{{ response.details }}">
         </fieldset>
@@ -26,10 +28,10 @@
         </fieldset>
     
         <fieldset>
-            <input id="is_rejected" type="boolean" name="isbn" value="False">
+            <input id="is_rejected" type="text" name="is_rejected" value="False">
         </fieldset>
 
-        {% if user.id is not None %}
+        {% if response.id is not None %}
             <input type="hidden" name="actual_method" value="PUT">
             <input type="submit" value="Update" />
         {% else %}

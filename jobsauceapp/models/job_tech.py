@@ -4,8 +4,8 @@ from .tech_type import Tech_Type
 
 class Job_Tech(models.Model):
 
-    job = models.ForeignKey(Job, on_delete=models.CASCADE)
-    tech_type = models.ForeignKey(Tech_Type, on_delete=models.CASCADE)
+    job = models.ForeignKey(Job, on_delete=models.CASCADE, null=True)
+    tech_type = models.ForeignKey(Tech_Type, on_delete=models.CASCADE, null=True)
 
     class Meta:
         verbose_name = ("job_tech")

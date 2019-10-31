@@ -11,6 +11,7 @@ urlpatterns = [
     # path('job/form', job_form, name='job_form'),
     path('responses', response_list, name='responses'),
     path('response/form', response_form, name='response_form'),
+    # path('responses/(?P<book_id>[0-9]+)', response_list, name='responses'),
     # path('connections', social_connection_list, name='social_connection_list'),
     path('resources', study_resource_list, name='resources'),
     # path('resource/form', study_resource_form, name='study_resource_form'),

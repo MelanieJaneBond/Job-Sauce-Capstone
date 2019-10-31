@@ -6,13 +6,13 @@ from .company import Company
 
 class Social_Connection(models.Model):
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    company = models.ForeignKey(Company, on_delete=models.CASCADE)
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
-    title_of_position = models.CharField(max_length=100)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, null=True)
+    first_name = models.CharField(max_length=50, blank=True)
+    last_name = models.CharField(max_length=50, blank=True)
+    title_of_position = models.CharField(max_length=100, blank=True)
     date_of_last_encounter = models.DateField(auto_now_add=True, blank=True)
-    linked_in_profile = models.URLField(max_length=250)
+    linked_in_profile = models.URLField(max_length=250, blank=True)
 
     class Meta:
         verbose_name = ("social_connection")

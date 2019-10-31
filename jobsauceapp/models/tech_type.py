@@ -2,7 +2,7 @@ from django.db import models
 
 class Tech_Type(models.Model):
 
-    name = models.CharField(max_length=25)
+    name = models.CharField(max_length=25, blank=True)
 
     class Meta:
         verbose_name = ("tech_type")
