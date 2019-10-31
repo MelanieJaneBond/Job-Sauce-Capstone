@@ -13,7 +13,7 @@ def response_list(request):
 
             db_cursor.execute("""
             select
-                c.name, j.title_of_position, r.details, r.date
+                c.name, j.title_of_position, r.details, r.date, r.id
                 from jobsauceapp_job j 
                 join jobsauceapp_company c on c.job_id = j.id
                 join jobsauceapp_response r on j.id = r.job_id
@@ -29,6 +29,7 @@ def response_list(request):
                 response.title_of_position = row['title_of_position']
                 response.details = row['details']
                 response.date = row['date']
+                response.id = row['id']
 
                 responses.append(response)
 
