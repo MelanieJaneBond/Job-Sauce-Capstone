@@ -1,5 +1,6 @@
 import sqlite3
-from django.shortcuts import render
+from django.urls import reverse
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from jobsauceapp.models import Job, Response, Company
 from ..connection import Connection
@@ -29,6 +30,7 @@ def create_response_join_table(cursor, row):
     response = Response()
     response.details = row[2]
     response.date = row[3]
+    response.response_id = row[4]
 
     return (company, job, response)
 
@@ -39,7 +41,7 @@ def get_response(response_id):
 
         db_cursor.execute("""
         select
-            c.name, j.title_of_position, r.details, r.date
+            c.name, j.title_of_position, r.details, r.date, r.id as response_id
             from jobsauceapp_job j 
             join jobsauceapp_company c on c.job_id = j.id
             join jobsauceapp_response r on j.id = r.job_id
@@ -64,59 +66,19 @@ def get_jobs():
         """)
 
         return db_cursor.fetchall()
-def library_details(request, library_id):
+
+def response_details(request, response_id):
     if request.method == 'GET':
 
-        library = get_library(library_id)
-        template = 'libraries/detail.html'
+        response = get_response(response_id)
+        template = 'response/list.html'
         context = {
-            'library': library
+            'all_responses': response
         }
 
         return render(request, template, context)
 
     elif request.method == 'POST':
-        form_data = request.POST
-
-        # Check if this POST is for editing a library
-        if (
-            "actual_method" in form_data
-            and form_data["actual_method"] == "PUT"
-        ):
-            with sqlite3.connect(Connection.db_path) as conn:
-                db_cursor = conn.cursor()
-
-                db_cursor.execute("""
-                    UPDATE libraryapp_library
-                    SET title = ?,
-                        address = ?
-                    WHERE id = ?
-                    """,
-                    (
-                        form_data['title'],
-                        form_data['address'],
-                        library_id,
-                    )
-                )
-
-            return redirect(reverse('libraryapp:libraries'))
-
-        # Check if this POST is for deleting a library
-        if (
-            "actual_method" in form_data
-            and form_data["actual_method"] == "DELETE"
-        ):
-            with sqlite3.connect(Connection.db_path) as conn:
-                db_cursor = conn.cursor()
-
-                db_cursor.execute("""
-                    DELETE FROM libraryapp_library
-                    WHERE id = ?
-                """, (library_id,))
-
-            return redirect(reverse('jobsauceapp:responses'))
-
-                elif request.method == 'POST':
         form_data = request.POST
 
         with sqlite3.connect(Connection.db_path) as conn:
@@ -129,8 +91,8 @@ def library_details(request, library_id):
             """,
             (form_data['is_rejected'], form_data['date'],
                 form_data['job_id'], request.user.id, form_data["details"]))
-
-        return redirect(reverse('jobsauceapp:responses'))
+            
+            return redirect(reverse('jobsauceapp:responses'))
 
         if (
             "actual_method" in form_data
@@ -142,6 +104,6 @@ def library_details(request, library_id):
                 db_cursor.execute("""
                     DELETE FROM jobsauceapp_response
                     WHERE id = ?
-                """, (id,))
+                """, (response_id,))
 
             return redirect(reverse('jobsauceapp:responses'))

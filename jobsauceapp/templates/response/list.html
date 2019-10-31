@@ -10,7 +10,7 @@
             <p>Regarding your application to the position of <strong>{{ response.title_of_position }}:</strong> "{{ response.details }}"</p>
             <h5> {{ response.date }} </h5>
     <section id="response-record-actions" style="display:flex;">
-        <form action="{% url 'jobsauceapp:responses' response.id %}" method="POST">
+        <form action="{% url 'jobsauceapp:response_details' response.id %}" method="POST">
             {% csrf_token %}
             <input type="hidden" name="actual_method" value="DELETE">
             <button>Delete</button>
