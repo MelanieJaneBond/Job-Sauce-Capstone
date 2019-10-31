@@ -1,0 +1,43 @@
+{% extends 'shared/base.html' %}
+
+{% block content %}
+    <h2>Response Record</h2>
+
+    {% if response.id is not None %}
+        <form action="{% url 'jobsauceapp:response' response.id %}" method="post">
+    {% else %}
+        <form action="{% url 'jobsauceapp:responses' %}" method="post">
+    {% endif %}
+        {% csrf_token %}
+        <fieldset>
+            <label for="job_id">Position: </label>
+            <select id="job_id" type="text" name="job_id">
+                {% for job in all_jobs %}
+                <option {% if job.id == response.job_id %}selected{% endif %} value="{{ job.id }}">
+                    {{ job.title_of_position }}</option>
+                {% endfor %}
+            </select>
+        </fieldset>
+        <fieldset>
+            <label for="details">What did they say?</label>
+            <input id="details" type="text" name="details" value="{{ response.details }}">
+        </fieldset>
+        <fieldset>
+            <label for="date">Date of Response: </label>
+            <input id="date" type="text" name="date" value="{{ response.date }}">
+        </fieldset>
+    
+        {% comment %} <fieldset>
+            <input id="is_rejected" type="text" name="is_rejected" value="False">
+        </fieldset> {% endcomment %}
+
+        {% if response.id is not None %}
+            <input type="hidden" name="actual_method" value="PUT">
+            <input type="submit" value="Update" />
+        {% else %}
+            <input type="submit" value="Create" />
+        {% endif %}
+
+    </form>
+
+{% endblock %}

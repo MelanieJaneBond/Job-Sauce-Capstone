@@ -1,5 +1,6 @@
 import sqlite3
-from django.shortcuts import render
+from django.urls import reverse
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from jobsauceapp.models import Job, Response, Company
 from ..connection import Connection
@@ -65,27 +66,43 @@ def get_jobs():
 
         return db_cursor.fetchall()
 
-def response_form(request):
-
+def response_details(request, response_id):
     if request.method == 'GET':
-        jobs = get_jobs()
-        template = 'response/form.html'
-        context = {
-            'all_jobs': jobs
-        }
 
-        return render(request, template, context)
-
-def response_edit_form(request, response_id):
-
-    if request.method == 'GET':
         response = get_response(response_id)
-        jobs = get_jobs()
-
-        template = 'response/form.html'
+        template = 'response/list.html'
         context = {
-            'response': response,
-            'all_jobs': jobs
+            'all_responses': response
         }
 
         return render(request, template, context)
+
+    elif request.method == 'POST':
+        form_data = request.POST
+
+        if (
+            "actual_method" in form_data
+            and form_data["actual_method"] == "DELETE"
+        ):
+            with sqlite3.connect(Connection.db_path) as conn:
+                db_cursor = conn.cursor()
+
+                db_cursor.execute("""
+                    DELETE FROM jobsauceapp_response
+                    WHERE id = ?
+                """, (response_id,))
+
+            return redirect(reverse('jobsauceapp:responses'))
+        else:
+            with sqlite3.connect(Connection.db_path) as conn:
+                db_cursor = conn.cursor()
+
+                db_cursor.execute("""
+                INSERT INTO jobsauceapp_response
+                (is_rejected, date, job_id, user_id, details)
+                values (?, ?, ?, ?, ?)
+                """,
+                (form_data['is_rejected'], form_data['date'],
+                    form_data['job_id'], request.user.id, form_data["details"]))
+                
+                return redirect(reverse('jobsauceapp:responses'))

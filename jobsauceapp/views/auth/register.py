@@ -32,7 +32,7 @@ def register_user(request):
         # If authentication was successful, log the user in
         if authenticated_user is not None:
             login(request=request, user=authenticated_user)
-            return redirect(reverse('jobsauceapp:job'))
+            return redirect(reverse('jobsauceapp:jobs'))
 
         else:
             # Bad login details were provided. So we can't log the user in.
