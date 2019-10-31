@@ -10,3 +10,4 @@ from .response.detail import response_details
 
 from .resource.list import resource_list
 from .resource.detail import resource_details
+from .resource.form import resource_form
