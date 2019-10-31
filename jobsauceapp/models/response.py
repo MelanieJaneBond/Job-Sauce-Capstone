@@ -8,7 +8,7 @@ class Response(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     job = models.ForeignKey(Job, on_delete=models.CASCADE)
     details = models.CharField(max_length=400, null=True, blank=True)
-    is_rejected = models.BooleanField(default=False)
+    is_rejected = models.BooleanField(default=False, blank=True)
     date = models.DateTimeField(auto_now_add=True, blank=True)
 
     class Meta:
