@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from jobsauceapp.models import Job, Company, Response
 from ..connection import Connection
+from django.utils.datastructures import MultiValueDictKeyError
 
 def response_list(request):
     if request.method == 'GET':
@@ -37,19 +38,18 @@ def response_list(request):
         }
         return render(request, template, context)
 
-    # elif request.method == 'POST':
-    #     form_data = request.POST
+    elif request.method == 'POST':
+        form_data = request.POST
 
-    #     with sqlite3.connect(Connection.db_path) as conn:
-    #         db_cursor = conn.cursor()
+        with sqlite3.connect(Connection.db_path) as conn:
+            db_cursor = conn.cursor()
 
-    #         db_cursor.execute("""
-    #         INSERT INTO libraryapp_book
-    #         (title, author, isbn, year_published, location_id, librarian_id)
-    #         values (?, ?, ?, ?, ?, ?)
-    #         """,
-    #         (form_data['title'], form_data['author'],
-    #             form_data['isbn'], form_data['year_published'],
-    #             request.user.librarian.id, form_data["location"]))
+            db_cursor.execute("""
+            INSERT INTO jobsauceapp_response
+            (is_rejected, date, job_id, user_id, details)
+            values (?, ?, ?, ?, ?)
+            """,
+            (form_data['is_rejected'], form_data['date'],
+                form_data['job_id'], request.user.id, form_data["details"]))
 
-    #     return redirect(reverse('libraryapp:books'))
+        return redirect(reverse('jobsauceapp:responses'))
