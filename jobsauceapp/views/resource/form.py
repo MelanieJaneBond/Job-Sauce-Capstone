@@ -1,7 +1,7 @@
 import sqlite3
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from jobsauceapp.models import Job, Company, Tech_Type, Job_Tech
+from jobsauceapp.models import Job, Company, Tech_Type, Job_Tech, Resource
 from ..connection import Connection
 
 def create_job_listing(cursor, row):
@@ -39,19 +39,32 @@ def job_list():
         """)
 
         return db_cursor.fetchall()
-        
-# def get_resource(resource_id):
-#     with sqlite3.connect(Connection.db_path) as conn:
-#         conn.row_factory = 
-#         db_cursor = conn.cursor()
 
-#         db_cursor.execute("""
-#         select
-#             id, link_to_resource, date_due, is_complete, company_id, tech_type_id, user_id
-#             from jobsauceapp_resource
-#         """, (resource_id,))
+def create_resource(cursor, row):
+    row = sqlite3.Row(cursor, row)
+        resource = Resource()
+        resource.id = row[0]
+        resource.link_to_resource = row[1]
+        resource.date_due = row[2]
+        resource.is_complete = row[3]
+        resource.company_id = row[4]
+        resource.tech_type_id = row[5]
+        resource.user_id = row[6]
 
-#         return db_cursor.fetchone()
+        return (resource)
+
+def get_resource(resource_id):
+    with sqlite3.connect(Connection.db_path) as conn:
+        conn.row_factory = create_resource
+        db_cursor = conn.cursor()
+
+        db_cursor.execute("""
+        select
+            id, link_to_resource, date_due, is_complete, company_id, tech_type_id, user_id
+            from jobsauceapp_resource
+        """, (resource_id,))
+
+        return db_cursor.fetchone()
 
 def resource_form(request):
 
