@@ -12,10 +12,14 @@ def resource_list(request):
 
             db_cursor.execute("""
             select
-                c.name as company_name, r.id, r.link_to_resource, r.date_due, r.is_complete, tt.name as tech_name
+                r.id,
+                r.link_to_resource,
+                r.date_due,
+                r.is_complete,
+                tt.id as tech_type_id,
+                tt.name as tech_name
                 from jobsauceapp_resource r 
                 join jobsauceapp_tech_type tt on tt.id = r.tech_type_id
-                join jobsauceapp_company c on c.id = r.company_id
                 order by date_due
             """)
 
@@ -28,6 +32,7 @@ def resource_list(request):
                 resource.link_to_resource = row['link_to_resource']
                 resource.date_due = row['date_due']
                 resource.is_complete = row['is_complete']
+                resource.tech_type_id = row['tech_type_id']
                 resource.tech_name = row['tech_name']
 
                 resources.append(resource)
@@ -38,3 +43,18 @@ def resource_list(request):
         }
 
         return render(request, template, context)
+    elif request.method == 'POST':
+        form_data = request.POST
+
+        with sqlite3.connect(Connection.db_path) as conn:
+            db_cursor = conn.cursor()
+
+            db_cursor.execute("""
+            INSERT INTO jobsauceapp_resource
+            (link_to_resource, date_due, is_complete, tech_type_id, user_id)
+            values (?, ?, ?, ?, ?)
+            """,
+            (form_data['link_to_resource'], form_data['date_due'],
+                form_data['is_complete'], form_data['tech_type_id'], request.user.id))
+
+        return redirect(reverse('jobsauceapp:resources'))

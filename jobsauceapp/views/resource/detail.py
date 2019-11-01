@@ -13,26 +13,24 @@ def create_resource_table(cursor, row):
     resource.link_to_resource = row[1]
     resource.date_due = row[2]
     resource.is_complete = row[3]
-    resource.company_id = row[4]
-    resource.tech_type_id = row[5]
-    resource.user_id = row[6]
+    resource.tech_type_id = row[4]
+    resource.user_id = row[5]
 
     return (resource)
 
 def create_resource_join_table(cursor, row):
     row = sqlite3.Row(cursor, row)
 
-    company = Company()
-    company.name = row[0]
-
     resource = Resource()
-    resource.link_to_resource = row[1]
-    resource.date_due = row[2]
-    resource.is_complete = row[3]
+    resource.link_to_resource = row[0]
+    resource.date_due = row[1]
+    resource.is_complete = row[2]
 
     tech_type = Tech_Type()
+    tech_type.tech_type_id = row[3]
     tech_type.name = row[4]
-    return (company, resource, tech_type)
+
+    return (resource, tech_type)
 
 def get_resource(resource_id):
     with sqlite3.connect(Connection.db_path) as conn:
@@ -41,14 +39,13 @@ def get_resource(resource_id):
 
         db_cursor.execute("""
         select
-        c.name as company_name,
         r.link_to_resource,
         r.date_due,
         r.is_complete,
+        tt.id as tech_type_id,
         tt.name
         from jobsauceapp_resource r 
-        join jobsauceapp_tech_type tt on tt.id = sr.tech_type_id
-        join jobsauceapp_company c on c.id = sr.company_id
+        join jobsauceapp_tech_type tt on tt.id = r.tech_type_id
         order by date_due;
         """, (resource_id,))
 
@@ -65,7 +62,6 @@ def get_resources():
             link_to_resource,
             date_due,
             is_complete,
-            company_id,
             tech_type_id,
             user_id
         from jobsauceapp_resource
@@ -106,10 +102,10 @@ def resource_details(request, resource_id):
 
                 db_cursor.execute("""
                 INSERT INTO jobsauceapp_resource
-                (link_to_resource, date_due, is_complete, company_id, tech_type_id, user_id)
-                values (?, ?, ?, ?, ?, ?)
+                (link_to_resource, date_due, is_complete, tech_type_id, user_id)
+                values (?, ?, ?, ?, ?)
                 """,
                 (form_data['link_to_resource'], form_data['date_due'], form_data['is_complete'],
-                    form_data['company_id'], form_data['tech_type_id'], request.user.id))
+                    form_data['tech_type_id'], request.user.id))
                 
                 return redirect(reverse('jobsauceapp:resources'))

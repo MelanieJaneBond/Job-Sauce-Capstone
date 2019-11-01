@@ -10,19 +10,12 @@
     {% endif %}
         {% csrf_token %}
         <fieldset>
-            <label for="job_id">Job to Study For: </label>
-            <select id="job_id" type="text" name="job_id">
-                {% for job in all_jobs %}
-                <option {{ job.title_of_position }} selected value="{{ job.id }}">
-                {{ job.title_of_position }}</option>
-            </select>
             <label for="tech_type_id">Technology to Study: </label>
             <select id="tech_type_id" type="text" name="tech_type_id">
-                    {% for tech_type in job.tech_types %}
+                    {% for tech_type in all_tech_types %}
                     <option {{ tech_type.name }} selected value="{{tech_type.tech_type_id}}">
                     {{ tech_type.name }}</option>
                     {% endfor %}
-                {% endfor %}
             </select>
         </fieldset>
         <fieldset>

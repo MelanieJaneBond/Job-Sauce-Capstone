@@ -4,19 +4,6 @@ from django.contrib.auth.decorators import login_required
 from jobsauceapp.models import Job, Response, Company
 from ..connection import Connection
 
-def create_job_table(cursor, row):
-    row = sqlite3.Row(cursor, row)
-
-    job = Job()
-    job.id = row[0]
-    job.title_of_position = row[1]
-    job.date_of_submission = row[2]
-    job.company_id = row[3]
-    job.tech_list_id = row[4]
-    job.user_id = row[5]
-
-    return (job)
-
 def create_response_join_table(cursor, row):
     row = sqlite3.Row(cursor, row)
 
@@ -47,6 +34,19 @@ def get_response(response_id):
 
         return db_cursor.fetchone()
 
+def create_job_table(cursor, row):
+    row = sqlite3.Row(cursor, row)
+
+    job = Job()
+    job.id = row[0]
+    job.title_of_position = row[1]
+    job.date_of_submission = row[2]
+    job.company_id = row[3]
+    job.tech_list_id = row[4]
+    job.user_id = row[5]
+
+    return (job)
+    
 def get_jobs():
     with sqlite3.connect(Connection.db_path) as conn:
         conn.row_factory = create_job_table

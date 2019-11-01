@@ -2,7 +2,7 @@
 
 {% block content %}
     <h2>Study Resources</h2>
-    {% comment %} <h6>to enter a new study resource link <a href="{% url 'jobsauceapp:study_resource_form' %}">click here</a></h6> {% endcomment %}
+    <h6>to enter a new study resource link <a href="{% url 'jobsauceapp:resource_form' %}">click here</a></h6>
     <ol>
 
         {% for resource in all_resources %}
