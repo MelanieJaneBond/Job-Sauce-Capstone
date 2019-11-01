@@ -12,7 +12,6 @@ def resource_list(request):
 
             db_cursor.execute("""
             select
-                c.name as company_name,
                 r.id,
                 r.link_to_resource,
                 r.date_due,
@@ -21,7 +20,6 @@ def resource_list(request):
                 tt.name as tech_name
                 from jobsauceapp_resource r 
                 join jobsauceapp_tech_type tt on tt.id = r.tech_type_id
-                join jobsauceapp_company c on c.id = r.company_id
                 order by date_due
             """)
 
@@ -53,10 +51,10 @@ def resource_list(request):
 
             db_cursor.execute("""
             INSERT INTO jobsauceapp_resource
-            (link_to_resource, date_due, is_complete, company_id, tech_type_id, user_id)
-            values (?, ?, ?, ?, ?, ?, ?)
+            (link_to_resource, date_due, is_complete, tech_type_id, user_id)
+            values (?, ?, ?, ?, ?)
             """,
-            (form_data['link_to_resource'], form_data['date_due'], form_data['is_complete'],
-                form_data['company_id'], form_data['tech_type_id'], request.user.id))
+            (form_data['link_to_resource'], form_data['date_due'],
+                form_data['is_complete'], form_data['tech_type_id'], request.user.id))
 
         return redirect(reverse('jobsauceapp:resources'))

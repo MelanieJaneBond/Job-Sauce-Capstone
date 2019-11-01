@@ -8,7 +8,6 @@ class Resource(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     link_to_resource = models.URLField(max_length=250, blank=True)
-    company = models.ForeignKey(Company, on_delete=models.CASCADE, null=True)
     tech_type = models.ForeignKey(Tech_Type, on_delete=models.CASCADE, null=True)
     date_due = models.DateField(auto_now_add=True, blank=True)
     is_complete = models.BooleanField(default=False, blank=True)
