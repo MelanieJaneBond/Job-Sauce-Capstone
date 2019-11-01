@@ -15,7 +15,7 @@
         <input id="title_of_position" type="text" name="title_of_position" value="{{ job.title_of_position }}">
       </fieldset>
       <fieldset>
-        <label for="tech_names">What's the title of the position?</label>
+        <label for="tech_names">What tech type was listed as required for the position?</label>
         <input id="tech_names" type="text" name="tech_names" value="{{ tt.name }}">
       </fieldset>
       {% comment %} the one above this comment needs to eventually be able to take in a list {% endcomment %}
@@ -33,6 +33,10 @@
 
     </form>
 {% endblock %}
+
+{% comment %} I have just learned that the form_data[things] refer to the id values here in the form.
+If I am going to make this work, I have to learn what the HTML value is for and where that data goes...
+does it specify a specific "create" function I made somewhere in the code (e.g. details.py) {% endcomment %}
 
 
 {% comment %} The following columns are in the Job table but are not currently listed in the above form.
