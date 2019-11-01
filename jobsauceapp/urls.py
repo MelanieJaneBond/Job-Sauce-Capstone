@@ -8,7 +8,7 @@ app_name = "jobsauceapp"
 urlpatterns = [
     path('', home, name='home'),
     path('jobs', job_list, name='jobs'),
-    path('job/form1', job_form_1, name='job_form_start'),
+    path('job/form', job_form, name='job_form'),
     
     path('responses', response_list, name='responses'),
     path('response/form', response_form, name='response_form'),

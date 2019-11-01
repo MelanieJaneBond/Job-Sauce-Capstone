@@ -63,11 +63,11 @@ def get_companies():
 
         return db_cursor.fetchall()
 
-def job_form_1(request):
+def job_form(request):
 
     if request.method == 'GET':
         companies = get_companies()
-        template = 'job/form1.html'
+        template = 'job/form.html'
         context = {
             'all_companies': companies
         }
