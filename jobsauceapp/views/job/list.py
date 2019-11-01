@@ -56,20 +56,38 @@ def job_list(request):
     
     elif request.method == 'POST':
         form_data = request.POST
+        
+        with sqlite3.connect(Connection.db_path) as conn:
+            db_cursor = conn.cursor()
+
+            db_cursor.execute("""
+            INSERT INTO jobsauceapp_company
+            (name)
+            VALUES (?)
+            """,
+            (form_data['company_name']))
+        # return redirect(reverse('jobsauceapp:jobs'))
 
         with sqlite3.connect(Connection.db_path) as conn:
             db_cursor = conn.cursor()
 
             db_cursor.execute("""
-            INSERT INTO libraryapp_book
-            (
-                title, author, isbn,
-                year_published, location_id, librarian_id
-            )
-            VALUES (?, ?, ?, ?, ?, ?)
+            INSERT INTO jobsauceapp_tech_type
+            (name)
+            VALUES (?)
             """,
-            (form_data['title'], form_data['author'],
-                form_data['isbn'], form_data['year_published'],
-                request.user.librarian.id, form_data["location"]))
+            (form_data['tech_names']))
+        # return redirect(reverse('jobsauceapp:jobs'))
 
-        return redirect(reverse('libraryapp:books'))
+        with sqlite3.connect(Connection.db_path) as conn:
+            db_cursor = conn.cursor()
+
+            db_cursor.execute("""
+            INSERT INTO jobsauceapp_job
+            (title_of_position, date_of_submission, company_id, tech_list_id, user_id)
+            VALUES (?, ?, ?, ?, ?)
+            """,
+            (form_data['title_of_position'], form_data['date_of_submission'],
+                form_data['company_id'], form_data['tech_list_id'], request.user.id))
+
+        return redirect(reverse('jobsauceapp:jobs'))

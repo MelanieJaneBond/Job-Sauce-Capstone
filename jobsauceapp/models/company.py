@@ -2,7 +2,6 @@ from django.db import models
 
 class Company(models.Model):
 
-    job = models.ForeignKey('Job', on_delete=models.CASCADE, related_name="Co")
     name = models.CharField(max_length=100, blank=True)
 
     class Meta:

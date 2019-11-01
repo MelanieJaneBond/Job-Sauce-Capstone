@@ -40,30 +40,51 @@ def get_jobs(user_id):
 
         return db_cursor.all()
 
-@login_required
-def book_form(request):
+def create_company_table(cursor, row):
+    row = sqlite3.Row(cursor, row)
+
+    company = Company()
+    company.id = [0]
+    company.name = row[1]
+
+    return (company)
+
+def get_companies():
+    with sqlite3.connect(Connection.db_path) as conn:
+        conn.row_factory = create_company_table
+        db_cursor = conn.cursor()
+
+        db_cursor.execute("""
+        select
+            id,
+            name 
+        from jobsauceapp_company
+        """)
+
+        return db_cursor.fetchall()
+
+def job_form(request):
 
     if request.method == 'GET':
-        libraries = get_libraries()
-        template = 'books/form.html'
+        companies = get_companies()
+        template = 'job/form.html'
         context = {
-            'all_libraries': libraries
+            'all_companies': companies
         }
 
         return render(request, template, context)
 
+# @login_required
+# def book_edit_form(request, book_id):
 
-@login_required
-def book_edit_form(request, book_id):
+#     if request.method == 'GET':
+#         book = get_book(book_id)
+#         libraries = get_libraries()
 
-    if request.method == 'GET':
-        book = get_book(book_id)
-        libraries = get_libraries()
+#         template = 'books/form.html'
+#         context = {
+#             'book': book,
+#             'all_libraries': libraries
+#         }
 
-        template = 'books/form.html'
-        context = {
-            'book': book,
-            'all_libraries': libraries
-        }
-
-        return render(request, template, context)
+#         return render(request, template, context)

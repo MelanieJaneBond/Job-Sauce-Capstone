@@ -7,9 +7,22 @@
 
         {% for resource in all_resources %}
             <h4>{{ resource.company_name }}</h4>
-            <p>Are you ready to learn about {{resource.tech_name}}? <a href="{{resource.link_to_resource}}">click here</a></p>
+            <p>Are you ready to learn about <a href="{{resource.link_to_resource}}">{{resource.tech_name}}</a>?</p>
             <h5> {{ resource.due_date }} </h5>
-            <h6> Did you read/watch/do it yet? "{{ resource.is_complete }}" </h6>
+            {% if resource.is_complete == "True" %}
+            <h6> learned something new... #sick </h6>
+            {% elif resource.is_complete == "False" %}
+            <h6> let's get down to business... #studyme </h6>
+            {% endif %}
+
+                    {% comment %} <form action="/action_page.php">
+            <input type="checkbox" name="is_complete" value="True"> I have finished studying this tech resource.<br>
+            <input type="checkbox" name="is_complete" value="False" checked> I have not yet studied this.<br>
+            <input type="submit" value="Submit">
+        </form> {% endcomment %}
+
+        {% comment %} THE ABOVE CONSTITUTES A TYPE OF EDIT BUTTON... {% endcomment %}
+
             <section id="resource-actions" style="display:flex;">
                 <form action="{% url 'jobsauceapp:resource_details' resource.id %}" method="POST">
                     {% csrf_token %}

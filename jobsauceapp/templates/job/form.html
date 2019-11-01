@@ -4,29 +4,41 @@
     <h2>Enter a Job You've Applied to:</h2>
 
 
-    <form action="{% url 'libraryapp:books' %}" method="post">
+    <form action="{% url 'jobsauceapp:jobs' %}" method="post">
       {% csrf_token %}
       <fieldset>
-          <label for="company_name">Company Name: </label>
-          <input id="title" type="text" name="title">
+        <label for="company_name">Company Name: </label>
+        <input id="company_name" type="text" name="company_name" value="{{ company.company_name }}">
       </fieldset>
       <fieldset>
-          <label for="title_of_position">Title of Position: </label>
-          <input id="author" type="text" name="author">
+        <label for="title_of_position">What's the title of the position?</label>
+        <input id="title_of_position" type="text" name="title_of_position" value="{{ job.title_of_position }}">
       </fieldset>
-      {% comment %} <fieldset>
-          <label for="tech">Library: </label>
-          <select id="tech" type="text" name="tech">
-                {% for library in all_libraries %}
-                    <option value="{{ library.id }}">{{ library.title }}</option>
-                {% endfor %}
-          </select>
-      </fieldset> {% endcomment %}
       <fieldset>
-          <label for="date_of_apply">Date you Applied: </label>
-          <input id="date_of_apply" type="date" name="date_of_apply">
+        <label for="tech_names">What tech type was listed as required for the position?</label>
+        <input id="tech_names" type="text" name="tech_names" value="{{ tt.name }}">
       </fieldset>
+      {% comment %} the one above this comment needs to eventually be able to take in a list {% endcomment %}
+        <fieldset>
+            <label for="date_of_submission">Date you Applied: </label>
+            <input id="date_of_submission" type="text" name="date_of_submission" value="{{ job.date_of_submission }}">
+        </fieldset>
+      
+      {% if company.id is not None %}
+            <input type="hidden" name="actual_method" value="PUT">
+            <input type="submit" value="Update" />
+        {% else %}
+            <input type="submit" value="Create" />
+        {% endif %}
 
-      <input type="submit" value="Add It" />
     </form>
 {% endblock %}
+
+{% comment %} I have just learned that the form_data[things] refer to the id values here in the form.
+If I am going to make this work, I have to learn what the HTML value is for and where that data goes...
+does it specify a specific "create" function I made somewhere in the code (e.g. details.py) {% endcomment %}
+
+
+{% comment %} The following columns are in the Job table but are not currently listed in the above form.
+    How will I fill them in to the table if I do not take them upon creation?
+(company_id, tech_list_id) {% endcomment %}

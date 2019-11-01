@@ -26,9 +26,8 @@
             <label for="date_due">Due Date: </label>
             <input id="date_due" type="text" name="date_due" value="{{ resource.date_due }}">
         </fieldset>
-    
         <fieldset>
-            <input id="is_complete" type="text" name="is_complete" value="False">
+            <input id="is_complete" type="checkbox" name="is_complete" value="False" checked> I have not yet studied this.<br>
         </fieldset>
 
         {% if resource.id is not None %}
