@@ -51,7 +51,7 @@ def job_form_start(request):
 
     if request.method == 'GET':
         companies = get_companies()
-        template = 'job/form1.html'
+        template = 'job/form.html'
         context = {
             'all_companies': companies
         }

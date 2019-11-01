@@ -14,7 +14,7 @@ def response_list(request):
             select
                 c.name, j.title_of_position, r.details, r.date, r.id
                 from jobsauceapp_job j 
-                join jobsauceapp_company c on c.job_id = j.id
+                join jobsauceapp_company c on c.id = j.company_id
                 join jobsauceapp_response r on j.id = r.job_id
                 order by r.date DESC
             """)
