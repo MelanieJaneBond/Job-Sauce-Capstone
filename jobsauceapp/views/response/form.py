@@ -28,7 +28,7 @@ def get_response(response_id):
         select
             c.name, j.title_of_position, r.details, r.date
             from jobsauceapp_job j 
-            join jobsauceapp_company c on c.job_id = j.id
+            join jobsauceapp_company c on c.id = j.company_id
             join jobsauceapp_response r on j.id = r.job_id
         """, (response_id,))
 

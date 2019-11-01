@@ -4,29 +4,23 @@
     <h2>Enter a Job You've Applied to:</h2>
 
 
-    <form action="{% url 'libraryapp:books' %}" method="post">
+    <form action="{% url 'jobsauceapp:jobs' %}" method="post">
       {% csrf_token %}
       <fieldset>
-          <label for="company_name">Company Name: </label>
-          <input id="title" type="text" name="title">
+        <label for="company_name">Company Name: </label>
+        <select id="company_name" type="text" name="company_name">
+            {% for company in all_companies %}
+                <option value="{{ company.id }}">{{ company.name }}</option>
+            {% endfor %}
+        </select>
       </fieldset>
-      <fieldset>
-          <label for="title_of_position">Title of Position: </label>
-          <input id="author" type="text" name="author">
-      </fieldset>
-      {% comment %} <fieldset>
-          <label for="tech">Library: </label>
-          <select id="tech" type="text" name="tech">
-                {% for library in all_libraries %}
-                    <option value="{{ library.id }}">{{ library.title }}</option>
-                {% endfor %}
-          </select>
-      </fieldset> {% endcomment %}
-      <fieldset>
-          <label for="date_of_apply">Date you Applied: </label>
-          <input id="date_of_apply" type="date" name="date_of_apply">
-      </fieldset>
+      
+      {% if company.id is not None %}
+            <input type="hidden" name="actual_method" value="PUT_COMPANY">
+            <input type="submit" value="Update" />
+        {% else %}
+            <input type="submit" value="Create" />
+        {% endif %}
 
-      <input type="submit" value="Add It" />
     </form>
 {% endblock %}

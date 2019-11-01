@@ -43,11 +43,27 @@ def get_jobs(user_id):
 def create_company_table(cursor, row):
     row = sqlite3.Row(cursor, row)
 
-    companies = Company()
-    
+    company = Company()
+    company.id = [0]
+    company.name = row[1]
 
+    return (company)
 
-def job_form_start(request):
+def get_companies():
+    with sqlite3.connect(Connection.db_path) as conn:
+        conn.row_factory = create_company_table
+        db_cursor = conn.cursor()
+
+        db_cursor.execute("""
+        select
+            id,
+            name 
+        from jobsauceapp_company
+        """)
+
+        return db_cursor.fetchall()
+
+def job_form_1(request):
 
     if request.method == 'GET':
         companies = get_companies()
@@ -58,18 +74,17 @@ def job_form_start(request):
 
         return render(request, template, context)
 
+# @login_required
+# def book_edit_form(request, book_id):
 
-@login_required
-def book_edit_form(request, book_id):
+#     if request.method == 'GET':
+#         book = get_book(book_id)
+#         libraries = get_libraries()
 
-    if request.method == 'GET':
-        book = get_book(book_id)
-        libraries = get_libraries()
+#         template = 'books/form.html'
+#         context = {
+#             'book': book,
+#             'all_libraries': libraries
+#         }
 
-        template = 'books/form.html'
-        context = {
-            'book': book,
-            'all_libraries': libraries
-        }
-
-        return render(request, template, context)
+#         return render(request, template, context)
