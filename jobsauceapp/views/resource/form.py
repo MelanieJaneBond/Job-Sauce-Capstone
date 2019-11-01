@@ -8,8 +8,8 @@ def create_tech_table(cursor, row):
     row = sqlite3.Row(cursor, row)
 
     tech_type = Tech_Type()
-    tech_type.tech_type_id = row[1]
-    tech_type.name = row[0]
+    tech_type.tech_type_id = row[0]
+    tech_type.name = row[1]
 
     return (tech_type)
 
