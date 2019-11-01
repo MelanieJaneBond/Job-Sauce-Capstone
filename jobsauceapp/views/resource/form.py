@@ -42,16 +42,17 @@ def job_list():
 
 def create_resource(cursor, row):
     row = sqlite3.Row(cursor, row)
-        resource = Resource()
-        resource.id = row[0]
-        resource.link_to_resource = row[1]
-        resource.date_due = row[2]
-        resource.is_complete = row[3]
-        resource.company_id = row[4]
-        resource.tech_type_id = row[5]
-        resource.user_id = row[6]
 
-        return (resource)
+    resource = Resource()
+    resource.id = row[0]
+    resource.link_to_resource = row[1]
+    resource.date_due = row[2]
+    resource.is_complete = row[3]
+    resource.company_id = row[4]
+    resource.tech_type_id = row[5]
+    resource.user_id = row[6]
+
+    return (resource)
 
 def get_resource(resource_id):
     with sqlite3.connect(Connection.db_path) as conn:
