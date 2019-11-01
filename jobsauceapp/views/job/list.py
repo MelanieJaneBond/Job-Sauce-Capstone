@@ -91,3 +91,10 @@ def job_list(request):
                 form_data['company_id'], form_data['tech_list_id'], request.user.id))
 
         return redirect(reverse('jobsauceapp:jobs'))
+
+        # I need to recreate the form I had before... it was almost right...
+        # So, I learned the "form_data" parts in this file refer to the IDs on html inputs
+        # I don't yet understand what the "value" on html inputs refer to but
+        # it'll be fine. Don't forget about the fields that won't be filled out by the form
+        # in all the tables (especially job table) that may need HIDDEN default fillers or... 
+        # they'll need something I haven't thought of yet that utilizes what was created in the form.
