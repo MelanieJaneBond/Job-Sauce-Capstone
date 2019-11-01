@@ -40,14 +40,20 @@ def get_jobs(user_id):
 
         return db_cursor.all()
 
-@login_required
-def book_form(request):
+def create_company_table(cursor, row):
+    row = sqlite3.Row(cursor, row)
+
+    companies = Company()
+    
+
+
+def job_form_start(request):
 
     if request.method == 'GET':
-        libraries = get_libraries()
-        template = 'books/form.html'
+        companies = get_companies()
+        template = 'job/form1.html'
         context = {
-            'all_libraries': libraries
+            'all_companies': companies
         }
 
         return render(request, template, context)
