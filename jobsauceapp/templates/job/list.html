@@ -2,7 +2,7 @@
 
 {% block content %}
     <h2>Jobs you have applied for:</h2>
-    <h6>to enter a new job <a href="{% url 'jobsauceapp:job_form_start' %}">click here</a></h6>
+    <h6>to enter a new job <a href="{% url 'jobsauceapp:job_form' %}">click here</a></h6>
 
     <ol>
     {% for job in all_jobs %}

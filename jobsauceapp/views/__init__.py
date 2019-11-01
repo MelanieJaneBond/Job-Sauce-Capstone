@@ -3,6 +3,7 @@ from .home import home
 from .connection import Connection
 
 from .job.list import job_list
+from .job.form import job_form
 
 from .response.list import response_list
 from .response.form import response_form, response_edit_form
