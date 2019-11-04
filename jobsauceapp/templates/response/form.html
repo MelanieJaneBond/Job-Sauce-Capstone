@@ -4,7 +4,7 @@
     <h2>Response Record</h2>
 
     {% if response.id is not None %}
-        <form action="{% url 'jobsauceapp:response' response.id %}" method="post">
+        <form action="{% url 'jobsauceapp:responses' response.id %}" method="post">
     {% else %}
         <form action="{% url 'jobsauceapp:responses' %}" method="post">
     {% endif %}
@@ -28,7 +28,7 @@
         </fieldset>
     
         <fieldset>
-            <input id="is_rejected" type="text" name="is_rejected" value="False">
+            <input id="is_rejected" type="hidden" name="is_rejected" value="False">
         </fieldset>
 
         {% if response.id is not None %}

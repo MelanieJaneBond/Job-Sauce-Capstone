@@ -27,9 +27,10 @@ def get_response(response_id):
         db_cursor.execute("""
         select
             c.name, j.title_of_position, r.details, r.date
-            from jobsauceapp_job j 
+            from jobsauceapp_job j
             join jobsauceapp_company c on c.id = j.company_id
             join jobsauceapp_response r on j.id = r.job_id
+        where r.id = ?
         """, (response_id,))
 
         return db_cursor.fetchone()
