@@ -3,30 +3,41 @@
 {% block content %}
     <h2>Enter a Job You've Applied to:</h2>
 
-
-    <form action="{% url 'libraryapp:books' %}" method="post">
-      {% csrf_token %}
+    {% if job.id is not None %}
+        <form action="{% url 'jobsauceapp:job' job.id %}" method="post">
+    {% else %}
+        <form action="{% url 'jobsauceapp:jobs' %}" method="post">
+    {% endif %}
+        {% csrf_token %}
       <fieldset>
           <label for="company_name">Company Name: </label>
-          <input id="title" type="text" name="title">
+          <input id="company_name" type="text" name="company_name">
       </fieldset>
+        <input id="company_id" type="hidden" name="company_id" value="5">
       <fieldset>
           <label for="title_of_position">Title of Position: </label>
-          <input id="author" type="text" name="author">
+          <input id="title_of_position" type="text" name="title_of_position">
       </fieldset>
-      {% comment %} <fieldset>
-          <label for="tech">Library: </label>
-          <select id="tech" type="text" name="tech">
-                {% for library in all_libraries %}
-                    <option value="{{ library.id }}">{{ library.title }}</option>
-                {% endfor %}
-          </select>
-      </fieldset> {% endcomment %}
+        <fieldset>
+            <label for="tech_names">What technologies did they list as necessary to the position?</label>
+            <input id="tech_names" type="text" name="tech_names">
+        </fieldset>
+        <input id="tech_list_id" type="hidden" name="tech_list_id" value="null">
       <fieldset>
-          <label for="date_of_apply">Date you Applied: </label>
-          <input id="date_of_apply" type="date" name="date_of_apply">
+          <label for="date_of_submission">Date you Applied: </label>
+          <input id="date_of_submission" type="date" name="date_of_submission">
       </fieldset>
 
-      <input type="submit" value="Add It" />
+      {% if job.id is not None %}
+            <input type="hidden" name="actual_method" value="PUT">
+            <input type="submit" value="Update" />
+        {% else %}
+            <input type="submit" value="Create" />
+        {% endif %}
     </form>
 {% endblock %}
+
+{% comment %} value="{{ company.company_name }}"
+value="{{ job.title_of_position }}"
+value="{{ tech_type.tech_names }}"
+value="{{ job.date_of_submission }}" {% endcomment %}

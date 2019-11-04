@@ -62,11 +62,13 @@ def job_list(request):
 
             db_cursor.execute("""
             INSERT INTO jobsauceapp_company
-            (name)
-            VALUES (?)
+            (id, name)
+            VALUES (?, ?)
             """,
-            (form_data['company_name']))
-        # return redirect(reverse('jobsauceapp:jobs'))
+            (form_data['company_id'], form_data['company_name']))
+
+    #is there a way to TAKE / GET the id given to this new company object and send it into the form?
+    # the job table needs a "company_id" value. It references it later in other pages of the app.
 
         with sqlite3.connect(Connection.db_path) as conn:
             db_cursor = conn.cursor()
@@ -76,8 +78,12 @@ def job_list(request):
             (name)
             VALUES (?)
             """,
-            (form_data['tech_names']))
-        # return redirect(reverse('jobsauceapp:jobs'))
+            (form_data['tech_names'],))
+    
+    #Also, here, this is supposed to be able to intake a list. I'll have to look that up in a minute...
+    # is there an HTML form field that can automatically take in a list, can I submit more than one tech
+    # intstance in one form? Where do I need to tell this app that what's coming in is a list of separate
+    # instances of the tech_type objects?
 
         with sqlite3.connect(Connection.db_path) as conn:
             db_cursor = conn.cursor()
@@ -91,10 +97,3 @@ def job_list(request):
                 form_data['company_id'], form_data['tech_list_id'], request.user.id))
 
         return redirect(reverse('jobsauceapp:jobs'))
-
-        # I need to recreate the form I had before... it was almost right...
-        # So, I learned the "form_data" parts in this file refer to the IDs on html inputs
-        # I don't yet understand what the "value" on html inputs refer to but
-        # it'll be fine. Don't forget about the fields that won't be filled out by the form
-        # in all the tables (especially job table) that may need HIDDEN default fillers or... 
-        # they'll need something I haven't thought of yet that utilizes what was created in the form.
