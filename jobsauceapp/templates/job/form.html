@@ -13,26 +13,26 @@
           <label for="company_name">Company Name: </label>
           <input id="company_name" type="text" name="company_name">
       </fieldset>
-        {% comment %} <input id="company_id" type="hidden" name="company_id" value="5"> {% endcomment %}
       <fieldset>
           <label for="title_of_position">Title of Position: </label>
           <input id="title_of_position" type="text" name="title_of_position">
       </fieldset>
         <fieldset>
-            <label for="tech_names">What technologies did they list as necessary to the position?</label>
-            <input id="tech_names" type="text" name="tech_names">
-        </fieldset>
-    {% for tech_type in job.tech_types %}
-            <select id="tech_type_id" multiple>
-            <option value="{{tech_type.id}}">{{tech_type.name}}</option>
-            <option value="{{tech_type.id}}">{{tech_type.name}}</option>
-            <option value="{{tech_type.id}}">{{tech_type.name}}</option>
-            <option value="{{tech_type.id}}">{{tech_type.name}}</option>
-            <option value="{{tech_type.id}}">{{tech_type.name}}</optioin>
+            <label for="technologies_list">What technologies did they list as necessary to the position?</label>
+            <select id="technologies_list" multiple="true" name="technologies_list">
+        {% for technologies in all_technologies %}
+            <option value="{{technologies.id}}">{{technologies.name}}</option>
+        {% endfor %}
             </select>
-    {% endfor %}
-
-        <input id="tech_list_id" type="hidden" name="tech_list_id" value="null">
+            <input type="button" onclick="multipleFunc()" value="select multiple options">
+        </fieldset>
+      <p>Press CTRL and click above button to select multiple options at once.</p>
+      <script>
+         function multipleFunc() {
+            document.getElementById("technologies_list").multiple = true;
+         }
+      </script>
+                            <input id="tech_list_id" type="hidden" name="tech_list_id" value="null">
       <fieldset>
           <label for="date_of_submission">Date you Applied: </label>
           <input id="date_of_submission" type="date" name="date_of_submission">
@@ -49,5 +49,5 @@
 
 {% comment %} value="{{ company.company_name }}"
 value="{{ job.title_of_position }}"
-value="{{ tech_type.tech_names }}"
+value="{{ technologies.tech_names }}"
 value="{{ job.date_of_submission }}" {% endcomment %}

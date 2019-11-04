@@ -57,7 +57,8 @@ def job_list(request):
     elif request.method == 'POST':
         form_data = request.POST
         last_id = None
-        
+    #form_data.getlist("technologies_list")
+    #make a for loop that will "for each technology in technology_list" insert into the tech_types table!
         with sqlite3.connect(Connection.db_path) as conn:
             db_cursor = conn.cursor()
             nothing = None
@@ -74,39 +75,37 @@ def job_list(request):
             """)
 
             last_id = db_cursor.fetchone()
+        
 
+    with sqlite3.connect(Connection.db_path) as conn:
+        db_cursor = conn.cursor()
+
+        db_cursor.execute("""
+        INSERT INTO jobsauceapp_job
+        (title_of_position, date_of_submission, company_id, tech_list_id, user_id)
+        VALUES (?, ?, ?, ?, ?)
+        """,
+        (form_data['title_of_position'], form_data['date_of_submission'],
+            last_id[0], None, request.user.id))
+
+        db_cursor.execute("""
+            select last_insert_rowid()
+            """)
+
+        last_job_id = db_cursor.fetchone()
+
+    techlist = form_data.getlist('technologies_list')
+    for technology in techlist:
         with sqlite3.connect(Connection.db_path) as conn:
             db_cursor = conn.cursor()
+            nothing = None
 
             db_cursor.execute("""
-            INSERT INTO jobsauceapp_tech_type
-            (name)
-            VALUES (?)
+            INSERT INTO jobsauceapp_job_tech
+            (tech_type_id, job_id)
+            VALUES (?, ?)
             """,
-            (form_data['tech_names'],))
+            (technology, last_job_id[0]))
 
-#turn this into a loop of what comes out as a string from the above table.
-# will I need to create a new table? Does it matter?
-            # db_cursor.execute("""
-            # select last_insert_rowid()
-            # """)
 
-            # last_id = db_cursor.fetchone()
-    
-    #Also, here, this is supposed to be able to intake a list. I'll have to look that up in a minute...
-    # is there an HTML form field that can automatically take in a list, can I submit more than one tech
-    # intstance in one form? Where do I need to tell this app that what's coming in is a list of separate
-    # instances of the tech_type objects?
-
-        with sqlite3.connect(Connection.db_path) as conn:
-            db_cursor = conn.cursor()
-
-            db_cursor.execute("""
-            INSERT INTO jobsauceapp_job
-            (title_of_position, date_of_submission, company_id, tech_list_id, user_id)
-            VALUES (?, ?, ?, ?, ?)
-            """,
-            (form_data['title_of_position'], form_data['date_of_submission'],
-                last_id[0], form_data['tech_list_id'], request.user.id))
-
-        return redirect(reverse('jobsauceapp:jobs'))
+    return redirect(reverse('jobsauceapp:jobs'))

@@ -18,7 +18,7 @@ def create_job_listing(cursor, row):
 
     return (job, tech_type,)
 
-def get_jobs(user_id):
+def get_jobs():
     with sqlite3.connect(Connection.db_path) as conn:
         conn.row_factory = create_job_listing
         db_cursor = conn.cursor()
@@ -35,29 +35,29 @@ def get_jobs(user_id):
         left join jobsauceapp_response r on r.job_id = j.id
         left join jobsauceapp_job_tech jt on j.id = jt.job_id
         inner join jobsauceapp_tech_type tt on jt.tech_type_id = tt.id
-        """, (user_id,))
+        """)
 
-        return db_cursor.all()
+        return db_cursor.fetchall()
 
-def create_company_table(cursor, row):
+def create_technology_table(cursor, row):
     row = sqlite3.Row(cursor, row)
 
-    company = Company()
-    company.id = [0]
-    company.name = row[1]
+    technology = Tech_Type()
+    technology.id = row[0]
+    technology.name = row[1]
 
-    return (company)
+    return (technology)
 
-def get_companies():
+def get_technologies():
     with sqlite3.connect(Connection.db_path) as conn:
-        conn.row_factory = create_company_table
+        conn.row_factory = create_technology_table
         db_cursor = conn.cursor()
 
         db_cursor.execute("""
         select
             id,
             name 
-        from jobsauceapp_company
+        from jobsauceapp_tech_type
         """)
 
         return db_cursor.fetchall()
@@ -65,11 +65,20 @@ def get_companies():
 def job_form(request):
 
     if request.method == 'GET':
-        companies = get_companies()
+        technologies = get_technologies()
+        # jobs = get_jobs()
+        # job_technologies = {}
+        # for (job, tech_type) in jobs:
+        #     if job.title_of_position not in job_technologies:
+        #         job_technologies[job.title_of_position] = job
+        #         job_technologies[job.title_of_position].tech_types.append(tech_type)
+        #     else:
+        #         job_technologies[job.title_of_position].tech_types.append(tech_type)
+
         template = 'job/form.html'
         context = {
-            'all_jobs': job_technologies.values()
-            'all_companies': companies
+            # 'all_jobs': job_technologies.values()
+            'all_technologies': technologies
         }
 
         return render(request, template, context)
