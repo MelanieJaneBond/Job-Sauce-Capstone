@@ -35,7 +35,6 @@ def get_jobs(user_id):
         left join jobsauceapp_response r on r.job_id = j.id
         left join jobsauceapp_job_tech jt on j.id = jt.job_id
         inner join jobsauceapp_tech_type tt on jt.tech_type_id = tt.id
-        where j.user_id = ?
         """, (user_id,))
 
         return db_cursor.all()
@@ -69,6 +68,7 @@ def job_form(request):
         companies = get_companies()
         template = 'job/form.html'
         context = {
+            'all_jobs': job_technologies.values()
             'all_companies': companies
         }
 

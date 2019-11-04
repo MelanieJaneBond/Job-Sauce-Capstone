@@ -13,7 +13,7 @@
           <label for="company_name">Company Name: </label>
           <input id="company_name" type="text" name="company_name">
       </fieldset>
-        <input id="company_id" type="hidden" name="company_id" value="5">
+        {% comment %} <input id="company_id" type="hidden" name="company_id" value="5"> {% endcomment %}
       <fieldset>
           <label for="title_of_position">Title of Position: </label>
           <input id="title_of_position" type="text" name="title_of_position">
@@ -22,6 +22,16 @@
             <label for="tech_names">What technologies did they list as necessary to the position?</label>
             <input id="tech_names" type="text" name="tech_names">
         </fieldset>
+    {% for tech_type in job.tech_types %}
+            <select id="tech_type_id" multiple>
+            <option value="{{tech_type.id}}">{{tech_type.name}}</option>
+            <option value="{{tech_type.id}}">{{tech_type.name}}</option>
+            <option value="{{tech_type.id}}">{{tech_type.name}}</option>
+            <option value="{{tech_type.id}}">{{tech_type.name}}</option>
+            <option value="{{tech_type.id}}">{{tech_type.name}}</optioin>
+            </select>
+    {% endfor %}
+
         <input id="tech_list_id" type="hidden" name="tech_list_id" value="null">
       <fieldset>
           <label for="date_of_submission">Date you Applied: </label>

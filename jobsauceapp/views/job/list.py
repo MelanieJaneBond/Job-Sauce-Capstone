@@ -34,7 +34,7 @@ def job_list(request):
                 left join jobsauceapp_company c on j.company_id = c.id
                 left join jobsauceapp_response r on r.job_id = j.id
                 left join jobsauceapp_job_tech jt on j.id = jt.job_id
-                inner join jobsauceapp_tech_type tt on jt.tech_type_id = tt.id
+                left join jobsauceapp_tech_type tt on jt.tech_type_id = tt.id
             """)
 
             jobs = db_cursor.fetchall()
@@ -56,19 +56,24 @@ def job_list(request):
     
     elif request.method == 'POST':
         form_data = request.POST
+        last_id = None
         
         with sqlite3.connect(Connection.db_path) as conn:
             db_cursor = conn.cursor()
+            nothing = None
 
             db_cursor.execute("""
             INSERT INTO jobsauceapp_company
-            (id, name)
-            VALUES (?, ?)
+            (name)
+            VALUES (?)
             """,
-            (form_data['company_id'], form_data['company_name']))
+            (form_data['company_name'],))
 
-    #is there a way to TAKE / GET the id given to this new company object and send it into the form?
-    # the job table needs a "company_id" value. It references it later in other pages of the app.
+            db_cursor.execute("""
+            select last_insert_rowid()
+            """)
+
+            last_id = db_cursor.fetchone()
 
         with sqlite3.connect(Connection.db_path) as conn:
             db_cursor = conn.cursor()
@@ -79,6 +84,14 @@ def job_list(request):
             VALUES (?)
             """,
             (form_data['tech_names'],))
+
+#turn this into a loop of what comes out as a string from the above table.
+# will I need to create a new table? Does it matter?
+            # db_cursor.execute("""
+            # select last_insert_rowid()
+            # """)
+
+            # last_id = db_cursor.fetchone()
     
     #Also, here, this is supposed to be able to intake a list. I'll have to look that up in a minute...
     # is there an HTML form field that can automatically take in a list, can I submit more than one tech
@@ -94,6 +107,6 @@ def job_list(request):
             VALUES (?, ?, ?, ?, ?)
             """,
             (form_data['title_of_position'], form_data['date_of_submission'],
-                form_data['company_id'], form_data['tech_list_id'], request.user.id))
+                last_id[0], form_data['tech_list_id'], request.user.id))
 
         return redirect(reverse('jobsauceapp:jobs'))
