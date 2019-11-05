@@ -5,44 +5,6 @@ from django.contrib.auth.decorators import login_required
 from jobsauceapp.models import Job, Company, Job_Tech, Tech_Type
 from ..connection import Connection
 
-# def get_job_joined(job_id):
-#     with sqlite3.connect(Connection.db_path) as conn:
-#         conn.row_factory = create_job_joined
-#         db_cursor = conn.cursor()
-
-#         db_cursor.execute("""
-#         select
-#             j.id,
-#             j.title_of_position,
-#             j.date_of_submission,
-#             j.company_id,
-#             j.tech_list_id,
-#             j.user_id
-#         from jobsauceapp_job j
-#         left join jobsauceapp_company c
-#         on j.company_id = c.id
-#         where j.id = ?
-#         """, (job_id,)
-#         )
-
-#         return db_cursor.fetchone()
-
-# def create_job_joined(cursor, row):
-#     row = sqlite3.Row(cursor, row)
-
-#     job = Job()
-#     job.id = row[0]
-#     job.title_of_position = row[1]
-#     job.date_of_submission = row[2]
-#     job.company_id = row[3]
-#     job.tech_list_id = row[4]
-#     job.user_id = row[5]
-
-#     company = Company()
-#     company.id = row[6]
-#     company.name = row[7]
-
-#     return (company, job,)
 #get one of job, company, and job_techs
 #you will be PUTTING for EACH ID so, you need a details.py
 # to organize the functionality of your code
@@ -173,6 +135,7 @@ def job_details_form(request, job_id):
 
     elif request.method == 'POST':
         form_data = request.POST
+        last_id = None
 
         # Check if this POST is for editing instead of creating
         if (
@@ -181,13 +144,15 @@ def job_details_form(request, job_id):
         ):
             with sqlite3.connect(Connection.db_path) as conn:
                 db_cursor = conn.cursor()
+                job = get_job(job_id)
 
                 db_cursor.execute("""
                 UPDATE jobsauceapp_company
-                SET name = ?,
+                SET name = ?
                 WHERE id = ?
                 """,
-                (form_data['company_name'], form_data['company_id'],))
+                (form_data['company_name'], job.company.id,))
+
 
             with sqlite3.connect(Connection.db_path) as conn:
                 db_cursor = conn.cursor()
@@ -198,30 +163,34 @@ def job_details_form(request, job_id):
                     date_of_submission = ?,
                     company_id = ?,
                     tech_list_id = ?,
-                    user_id = ?,
+                    user_id = ?
                 WHERE id = ?
                 """,
                 (form_data['title_of_position'], form_data['date_of_submission'],
-                    company_id, None, request.user.id))
-    
-    #delete all the techs they created before, when they choose to edit the techs, all will go away and
-    # a new list of techs will be created when they hit submit on the edit form.
-    #I will need to fetch the ID of the job they are editing... or the ID of the job they just edited ?
-    # using that id, I will write a SQL delete and then an INSERT INTO for the job_tech table
+                    job.company.id, None, request.user.id, job_id))
 
+            with sqlite3.connect(Connection.db_path) as conn:
+                    db_cursor = conn.cursor()
+
+                    db_cursor.execute("""
+                        DELETE FROM jobsauceapp_job_tech
+                        WHERE job_id = ?
+                    """, (job_id,))
+        
+        techlist = form_data.getlist('technologies_list')
+        for technology in techlist:
             with sqlite3.connect(Connection.db_path) as conn:
                 db_cursor = conn.cursor()
                 nothing = None
 
                 db_cursor.execute("""
-                UPDATE jobsauceapp_job_tech
-                SET tech_type_id = ?
-                WHERE job_id = ?
+                INSERT INTO jobsauceapp_job_tech
+                (tech_type_id, job_id)
+                VALUES (?, ?)
                 """,
-                (form_data['technologies_list'], job_id,))
+                (technology, job_id))
             
-            
-            return redirect(reverse('jobsauceapp:jobs'))
+        return redirect(reverse('jobsauceapp:jobs'))
 
         # Check if this POST is for deleting instead of creating
         if (
