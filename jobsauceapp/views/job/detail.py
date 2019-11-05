@@ -2,7 +2,7 @@ import sqlite3
 from django.urls import reverse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from jobsauceapp.models import Job, Company, Job_Tech
+from jobsauceapp.models import Job, Company, Job_Tech, Tech_Type
 from ..connection import Connection
 
 # def get_job_joined(job_id):
@@ -130,16 +130,41 @@ def get_job_tech(job_id):
 
         return db_cursor.fetchone()
 
+def create_technology_table(cursor, row):
+    row = sqlite3.Row(cursor, row)
+
+    technology = Tech_Type()
+    technology.id = row[0]
+    technology.name = row[1]
+
+    return (technology)
+
+def get_technologies():
+    with sqlite3.connect(Connection.db_path) as conn:
+        conn.row_factory = create_technology_table
+        db_cursor = conn.cursor()
+
+        db_cursor.execute("""
+        select
+            id,
+            name 
+        from jobsauceapp_tech_type
+        """)
+
+        return db_cursor.fetchall()
+
 # @login_required
-def job_details(request, job_id):
+def job_details_form(request, job_id):
     if request.method == 'GET':
 
         # company = get_company(company_id)
         job = get_job(job_id)
         job_tech = get_job_tech(job_id)
-        template = 'job/detail.html'
+        technologies = get_technologies()
+        template = 'job/form.html'
         context = {
             # 'company': company,
+            'all_technologies': technologies,
             'job': job,
             'job_tech': job_tech
         }
@@ -162,7 +187,7 @@ def job_details(request, job_id):
                 SET name = ?,
                 WHERE id = ?
                 """,
-                (form_data['company_name'], company_id,))
+                (form_data['company_name'], form_data['company_id'],))
 
             with sqlite3.connect(Connection.db_path) as conn:
                 db_cursor = conn.cursor()
