@@ -107,5 +107,4 @@ def job_list(request):
             """,
             (technology, last_job_id[0]))
 
-
     return redirect(reverse('jobsauceapp:jobs'))
