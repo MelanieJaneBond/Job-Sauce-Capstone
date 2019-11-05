@@ -1,0 +1,42 @@
+{% extends 'shared/base.html' %}
+
+{% block content %}
+    <section id="job-details">
+        <h2 id="company_name"> {{ company.name }}</h2>
+        <h2 id="title_of_position">{{ job.title_of_position }}</h2>
+        <fieldset>
+            <label for="technologies_list">What technologies did they list as necessary to the position?</label>
+            <select id="technologies_list" multiple="true" name="technologies_list">
+        {% for technologies in all_technologies %}
+            <h6>Press CTRL and click each tech to select multiple options at once.</h6>
+            <option value="{{technologies.id}}">{{technologies.name}}</option>
+        {% endfor %}
+            </select>
+            <input type="button" onclick="multipleFunc()" value="select multiple options">
+        </fieldset>
+            <script>
+                function multipleFunc() {
+                    document.getElementById("technologies_list").multiple = true;
+                }
+            </script>
+        <h3 id="date_of_submission"> {{ job.date_of_submission }}
+    </section>
+
+    <section id="job-actions">
+        <form action="{% url 'jobsauceapp:job' job.id %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="actual_method" value="DELETE">
+            <button>Delete</button>
+        </form>
+
+        <form action="{% url 'jobsauceapp:job_edit_form' job.id %}" method="GET">
+            {% csrf_token %}
+            <button>Edit</button>
+        </form>
+    
+    {% comment %} {% if library.id is not None %}
+            <input type="hidden" name="actual_method" value="PUT">
+            <input type="submit" value="Update" />
+        {% else %}
+            <input type="submit" value="Create" />
+        {% endif %} {% endcomment %}
