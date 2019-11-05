@@ -5,6 +5,44 @@ from django.contrib.auth.decorators import login_required
 from jobsauceapp.models import Job, Company, Job_Tech
 from ..connection import Connection
 
+# def get_job_joined(job_id):
+#     with sqlite3.connect(Connection.db_path) as conn:
+#         conn.row_factory = create_job_joined
+#         db_cursor = conn.cursor()
+
+#         db_cursor.execute("""
+#         select
+#             j.id,
+#             j.title_of_position,
+#             j.date_of_submission,
+#             j.company_id,
+#             j.tech_list_id,
+#             j.user_id
+#         from jobsauceapp_job j
+#         left join jobsauceapp_company c
+#         on j.company_id = c.id
+#         where j.id = ?
+#         """, (job_id,)
+#         )
+
+#         return db_cursor.fetchone()
+
+# def create_job_joined(cursor, row):
+#     row = sqlite3.Row(cursor, row)
+
+#     job = Job()
+#     job.id = row[0]
+#     job.title_of_position = row[1]
+#     job.date_of_submission = row[2]
+#     job.company_id = row[3]
+#     job.tech_list_id = row[4]
+#     job.user_id = row[5]
+
+#     company = Company()
+#     company.id = row[6]
+#     company.name = row[7]
+
+#     return (company, job,)
 #get one of job, company, and job_techs
 #you will be PUTTING for EACH ID so, you need a details.py
 # to organize the functionality of your code
@@ -28,7 +66,7 @@ def create_job(cursor, row):
     job.tech_list_id = row[4]
     job.user_id = row[5]
 
-    return (job,)
+    return job
 
 def create_job_tech(cursor, row):
 
@@ -67,7 +105,6 @@ def get_job(job_id):
                 j.date_of_submission,
                 j.company_id,
                 j.tech_list_id,
-                j.tech_list_id,
                 j.user_id
             FROM jobsauceapp_job j
             WHERE j.id = ?
@@ -94,15 +131,15 @@ def get_job_tech(job_id):
         return db_cursor.fetchone()
 
 # @login_required
-def job_details(request, company_id, job_id):
+def job_details(request, job_id):
     if request.method == 'GET':
 
-        company = get_company(company_id)
+        # company = get_company(company_id)
         job = get_job(job_id)
         job_tech = get_job_tech(job_id)
-        template = 'jobs/detail.html'
+        template = 'job/detail.html'
         context = {
-            'company': company,
+            # 'company': company,
             'job': job,
             'job_tech': job_tech
         }
