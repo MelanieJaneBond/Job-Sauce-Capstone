@@ -4,7 +4,7 @@
     <h2>Response Record</h2>
 
     {% if response.id is not None %}
-        <form action="{% url 'jobsauceapp:responses' response.id %}" method="post">
+        <form action="{% url 'jobsauceapp:response' response.id %}" method="post">
     {% else %}
         <form action="{% url 'jobsauceapp:responses' %}" method="post">
     {% endif %}

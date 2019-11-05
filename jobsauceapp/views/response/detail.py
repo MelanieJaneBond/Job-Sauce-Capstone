@@ -33,7 +33,7 @@ def create_response_join_table(cursor, row):
 
     return (company, job, response)
 
-def get_response(response_id):
+def get_response_join(response_id):
     with sqlite3.connect(Connection.db_path) as conn:
         conn.row_factory = create_response_join_table
         db_cursor = conn.cursor()
@@ -66,13 +66,47 @@ def get_jobs():
 
         return db_cursor.fetchall()
 
-def response_details(request, response_id):
+def create_response(cursor, row):
+    row = sqlite3.Row(cursor, row)
+
+    response = Response()
+    response.id = row[0]
+    response.details = row[1]
+    response.is_rejected = row[2]
+    response.date = row[3]
+    response.job_id = row[4]
+    response.user_id = row[5]
+
+    return response
+
+def get_response(response_id):
+    with sqlite3.connect(Connection.db_path) as conn:
+        conn.row_factory = create_response
+        db_cursor = conn.cursor()
+
+        db_cursor.execute("""
+            SELECT
+                r.id,
+                r.details,
+                r.is_rejected,
+                r.date,
+                r.job_id,
+                r.user_id
+            FROM jobsauceapp_response r
+            WHERE r.id = ?
+            """, (response_id,)
+        )
+
+        return db_cursor.fetchone()
+
+def response_details_form(request, response_id):
     if request.method == 'GET':
 
-        response = get_response(response_id)
+        # response = get_response_join(response_id)
+        one_response = get_response(response_id)
         template = 'response/list.html'
         context = {
-            'all_responses': response
+            'one_response': one_response
         }
 
         return render(request, template, context)
@@ -98,9 +132,13 @@ def response_details(request, response_id):
                 db_cursor = conn.cursor()
 
                 db_cursor.execute("""
-                INSERT INTO jobsauceapp_response
-                (is_rejected, date, job_id, user_id, details)
-                values (?, ?, ?, ?, ?)
+                UPDATE jobsauceapp_response
+                SET details = ?,
+                    is_rejected = ?,
+                    date = ?,
+                    job_id = ?,
+                    user_id = ?
+                WHERE id = ?
                 """,
                 (form_data['is_rejected'], form_data['date'],
                     form_data['job_id'], request.user.id, form_data["details"]))

@@ -13,8 +13,8 @@ urlpatterns = [
     
     path('responses', response_list, name='responses'),
     path('response/form', response_form, name='response_form'),
-    path('response/<str:response_id>', response_details, name='response_details'),
-    path('response/<str:response_id>/form', response_edit_form, name='response_edit_form'),
+    path('response/<str:response_id>', response_details_form, name='response'),
+    # path('response/<str:response_id>/form', response_edit_form, name='response_edit_form'),
     # url(r'^books/(?P<book_id>[0-9]+)$', book_details, name="book"),
     # path('connections', social_connection_list, name='social_connection_list'),
     
