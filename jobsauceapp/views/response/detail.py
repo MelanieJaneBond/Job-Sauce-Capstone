@@ -103,9 +103,11 @@ def response_details_form(request, response_id):
     if request.method == 'GET':
 
         # response = get_response_join(response_id)
+        jobs = get_jobs()
         one_response = get_response(response_id)
-        template = 'response/list.html'
+        template = 'response/form.html'
         context = {
+            'all_jobs': jobs,
             'one_response': one_response
         }
 
