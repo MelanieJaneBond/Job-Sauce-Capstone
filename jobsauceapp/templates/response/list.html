@@ -15,6 +15,10 @@
                     <input type="hidden" name="actual_method" value="DELETE">
                     <button>Delete</button>
                 </form>
+                <form action="{% url 'jobsauceapp:response_edit_form' response.id %}" method="GET">
+                    {% csrf_token %}
+                    <button>Edit</button>
+                </form>
             </section>
         {% endfor %}
     <br></br>

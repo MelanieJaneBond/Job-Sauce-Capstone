@@ -34,7 +34,7 @@ def job_list(request):
                 left join jobsauceapp_company c on j.company_id = c.id
                 left join jobsauceapp_response r on r.job_id = j.id
                 left join jobsauceapp_job_tech jt on j.id = jt.job_id
-                inner join jobsauceapp_tech_type tt on jt.tech_type_id = tt.id
+                left join jobsauceapp_tech_type tt on jt.tech_type_id = tt.id
             """)
 
             jobs = db_cursor.fetchall()
@@ -56,38 +56,55 @@ def job_list(request):
     
     elif request.method == 'POST':
         form_data = request.POST
-        
+        last_id = None
+    #form_data.getlist("technologies_list")
+    #make a for loop that will "for each technology in technology_list" insert into the tech_types table!
         with sqlite3.connect(Connection.db_path) as conn:
             db_cursor = conn.cursor()
+            nothing = None
 
             db_cursor.execute("""
             INSERT INTO jobsauceapp_company
             (name)
             VALUES (?)
             """,
-            (form_data['company_name']))
-        # return redirect(reverse('jobsauceapp:jobs'))
-
-        with sqlite3.connect(Connection.db_path) as conn:
-            db_cursor = conn.cursor()
+            (form_data['company_name'],))
 
             db_cursor.execute("""
-            INSERT INTO jobsauceapp_tech_type
-            (name)
-            VALUES (?)
-            """,
-            (form_data['tech_names']))
-        # return redirect(reverse('jobsauceapp:jobs'))
+            select last_insert_rowid()
+            """)
 
+            last_id = db_cursor.fetchone()
+        
+
+    with sqlite3.connect(Connection.db_path) as conn:
+        db_cursor = conn.cursor()
+
+        db_cursor.execute("""
+        INSERT INTO jobsauceapp_job
+        (title_of_position, date_of_submission, company_id, tech_list_id, user_id)
+        VALUES (?, ?, ?, ?, ?)
+        """,
+        (form_data['title_of_position'], form_data['date_of_submission'],
+            last_id[0], None, request.user.id))
+
+        db_cursor.execute("""
+            select last_insert_rowid()
+            """)
+
+        last_job_id = db_cursor.fetchone()
+
+    techlist = form_data.getlist('technologies_list')
+    for technology in techlist:
         with sqlite3.connect(Connection.db_path) as conn:
             db_cursor = conn.cursor()
+            nothing = None
 
             db_cursor.execute("""
-            INSERT INTO jobsauceapp_job
-            (title_of_position, date_of_submission, company_id, tech_list_id, user_id)
-            VALUES (?, ?, ?, ?, ?)
+            INSERT INTO jobsauceapp_job_tech
+            (tech_type_id, job_id)
+            VALUES (?, ?)
             """,
-            (form_data['title_of_position'], form_data['date_of_submission'],
-                form_data['company_id'], form_data['tech_list_id'], request.user.id))
+            (technology, last_job_id[0]))
 
-        return redirect(reverse('jobsauceapp:jobs'))
+    return redirect(reverse('jobsauceapp:jobs'))
