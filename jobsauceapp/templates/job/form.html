@@ -11,11 +11,11 @@
         {% csrf_token %}
       <fieldset>
           <label for="company_name">Company Name: </label>
-          <input id="company_name" type="text" name="company_name">
+          <input id="company_name" type="text" name="company_name" value="{{job.company.name}}">
       </fieldset>
       <fieldset>
           <label for="title_of_position">Title of Position: </label>
-          <input id="title_of_position" type="text" name="title_of_position">
+          <input id="title_of_position" type="text" name="title_of_position" value="{{job.title_of_position}}">
       </fieldset>
         <fieldset>
             <label for="technologies_list">What technologies did they list as necessary to the position?</label>
@@ -24,18 +24,18 @@
             <option value="{{technologies.id}}">{{technologies.name}}</option>
         {% endfor %}
             </select>
+            <h6>Press CTRL and click tech to select multiple options at once.</h6>
             <input type="button" onclick="multipleFunc()" value="select multiple options">
         </fieldset>
-      <p>Press CTRL and click above button to select multiple options at once.</p>
       <script>
          function multipleFunc() {
             document.getElementById("technologies_list").multiple = true;
          }
       </script>
-                            <input id="tech_list_id" type="hidden" name="tech_list_id" value="null">
+            {% comment %} <input id="tech_list_id" type="hidden" name="tech_list_id" value="null"> {% endcomment %}
       <fieldset>
           <label for="date_of_submission">Date you Applied: </label>
-          <input id="date_of_submission" type="date" name="date_of_submission">
+          <input id="date_of_submission" type="date" name="date_of_submission" value="{{job.date_of_submission}}">
       </fieldset>
 
       {% if job.id is not None %}
@@ -46,8 +46,3 @@
         {% endif %}
     </form>
 {% endblock %}
-
-{% comment %} value="{{ company.company_name }}"
-value="{{ job.title_of_position }}"
-value="{{ technologies.tech_names }}"
-value="{{ job.date_of_submission }}" {% endcomment %}

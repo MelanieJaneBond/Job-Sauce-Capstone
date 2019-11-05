@@ -9,6 +9,7 @@ urlpatterns = [
     path('', home, name='home'),
     path('jobs', job_list, name='jobs'),
     path('job/form', job_form, name='job_form'),
+    path('jobs/<str:job_id>', job_details_form, name="job"),
     
     path('responses', response_list, name='responses'),
     path('response/form', response_form, name='response_form'),

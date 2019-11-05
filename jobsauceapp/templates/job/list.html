@@ -15,6 +15,7 @@
         </ul>
 
         <p> Application Submission Date: {{ job.date_of_submission }} </p>
+        <h6>to edit a job <a href="{% url 'jobsauceapp:job' job.id %}">click here</a></h6>
         <br></br>
     {% endfor %}
     </ol>
