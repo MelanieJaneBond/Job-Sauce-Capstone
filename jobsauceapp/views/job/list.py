@@ -8,13 +8,14 @@ def create_job_listing(cursor, row):
     row = sqlite3.Row(cursor, row)
 
     job = Job()
-    job.company_name = row[0]
-    job.title_of_position = row[1]
-    job.date_of_submission = row[3]
+    job.id = row[0]
+    job.company_name = row[1]
+    job.title_of_position = row[2]
+    job.date_of_submission = row[4]
     job.tech_types = []
 
     tech_type = Tech_Type()
-    tech_type.name = row[2]
+    tech_type.name = row[3]
 
     return (job, tech_type,)
 
@@ -26,6 +27,7 @@ def job_list(request):
 
             db_cursor.execute("""
             select
+                j.id,
                 c.name as company_name, 
                 j.title_of_position, 
                 tt.name, 
