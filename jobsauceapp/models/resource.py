@@ -19,6 +19,6 @@ class Resource(models.Model):
     def __str__(self):
         return self.name
     
-    def get_absolute_url(self):
-        return reverse("resource_details", kwargs={"pk": self.pk})
+    # def get_absolute_url(self):
+    #     return reverse("resource_detail_form", kwargs={"pk": self.pk})
     

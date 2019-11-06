@@ -23,10 +23,14 @@
         {% comment %} THE ABOVE CONSTITUTES A TYPE OF EDIT BUTTON... {% endcomment %}
 
             <section id="resource-actions" style="display:flex;">
-                <form action="{% url 'jobsauceapp:resource_details' resource.id %}" method="POST">
+                <form action="{% url 'jobsauceapp:resource' resource.id %}" method="POST">
                     {% csrf_token %}
                     <input type="hidden" name="actual_method" value="DELETE">
                     <button>Delete</button>
+                </form>
+                <form action="{% url 'jobsauceapp:resource' resource.id %}" method="GET">
+                    {% csrf_token %}
+                    <button>Edit</button>
                 </form>
             </section>
 

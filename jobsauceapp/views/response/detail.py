@@ -108,7 +108,7 @@ def response_details_form(request, response_id):
         template = 'response/form.html'
         context = {
             'all_jobs': jobs,
-            'one_response': one_response
+            'response': one_response
         }
 
         return render(request, template, context)
@@ -129,7 +129,10 @@ def response_details_form(request, response_id):
                 """, (response_id,))
 
             return redirect(reverse('jobsauceapp:responses'))
-        else:
+        elif (
+            "actual_method" in form_data
+            and form_data["actual_method"] == "PUT"
+        ):
             with sqlite3.connect(Connection.db_path) as conn:
                 db_cursor = conn.cursor()
 
@@ -142,7 +145,7 @@ def response_details_form(request, response_id):
                     user_id = ?
                 WHERE id = ?
                 """,
-                (form_data['is_rejected'], form_data['date'],
-                    form_data['job_id'], request.user.id, form_data["details"]))
+                (form_data["details"], form_data['is_rejected'], form_data['date'],
+                    form_data['job_id'], request.user.id, response_id))
                 
-                return redirect(reverse('jobsauceapp:responses'))
+            return redirect(reverse('jobsauceapp:responses'))
