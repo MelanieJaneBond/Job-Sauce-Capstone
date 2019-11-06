@@ -16,8 +16,8 @@ def response_list(request):
                 from jobsauceapp_job j 
                 join jobsauceapp_company c on c.id = j.company_id
                 join jobsauceapp_response r on j.id = r.job_id
-                order by r.date DESC
-            """)
+            where j.user_id = ?
+            """, (request.user.id,))
 
             responses = []
             dataset = db_cursor.fetchall()

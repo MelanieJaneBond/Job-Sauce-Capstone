@@ -20,8 +20,8 @@ def resource_list(request):
                 tt.name as tech_name
                 from jobsauceapp_resource r 
                 join jobsauceapp_tech_type tt on tt.id = r.tech_type_id
-                order by date_due
-            """)
+            where r.user_id = ?
+            """, (request.user.id,))
 
             resources = []
             dataset = db_cursor.fetchall()

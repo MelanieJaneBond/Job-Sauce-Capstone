@@ -37,7 +37,8 @@ def job_list(request):
                 left join jobsauceapp_response r on r.job_id = j.id
                 left join jobsauceapp_job_tech jt on j.id = jt.job_id
                 left join jobsauceapp_tech_type tt on jt.tech_type_id = tt.id
-            """)
+            where j.user_id = ?
+            """, (request.user.id,))
 
             jobs = db_cursor.fetchall()
             job_technologies = {}
