@@ -1,10 +1,10 @@
 {% extends 'shared/base.html' %}
 
 {% block content %}
-    <h2>Create a New Study Resource</h2>
+    <h2>Edit this Study Resource</h2>
 
     {% if resource.id is not None %}
-        <form action="{% url 'jobsauceapp:resource' resource.id %}" method="post">
+        <form action="{% url 'jobsauceapp:edit' resource.id %}" method="post">
     {% else %}
         <form action="{% url 'jobsauceapp:resources' %}" method="post">
     {% endif %}
@@ -12,10 +12,7 @@
         <fieldset>
             <label for="tech_type_id">Technology to Study: </label>
             <select id="tech_type_id" type="text" name="tech_type_id">
-                    {% for tech_type in all_tech_types %}
-                    <option {{ tech_type.name }} selected value="{{tech_type.tech_type_id}}">
-                    {{ tech_type.name }}</option>
-                    {% endfor %}
+                <option {{ resource.tech_type.name }} selected value="{{resource.tech_type_id}}">{{ resource.tech_type.name }}</option>
             </select>
         </fieldset>
         <fieldset>

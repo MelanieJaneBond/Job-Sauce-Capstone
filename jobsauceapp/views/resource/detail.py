@@ -115,7 +115,7 @@ def resource_detail_form(request, resource_id):
                     user_id = ?
                 WHERE id = ?
                 """,
-                (resource_id, form_data["details"], form_data['is_rejected'], form_data['date'],
-                    form_data['job_id'], request.user.id))
+                (form_data["link_to_resource"], form_data['date_due'], form_data['is_complete'],
+                    form_data['tech_type_id'], request.user.id))
                 
             return redirect(reverse('jobsauceapp:resources'))

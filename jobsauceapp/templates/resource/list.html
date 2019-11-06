@@ -7,11 +7,11 @@
 
         {% for resource in all_resources %}
             <h4>Are you ready to learn about <a href="{{resource.link_to_resource}}">{{resource.tech_name}}</a>?</h4>
-            <h5> {{ resource.due_date }} </h5>
+            <h5>Try to study it by... {{ resource.date_due }} </h5>
             {% if resource.is_complete == "True" %}
-            <h6> learned something new... #sick </h6>
+            {% comment %} <h6> learned something new... #sick </h6> {% endcomment %}
             {% elif resource.is_complete == "False" %}
-            <p> let's get down to business... #studyme </p>
+            {% comment %} <p> let's get down to business... #studyme </p> {% endcomment %}
             {% endif %}
 
                     {% comment %} <form action="/action_page.php">
@@ -28,7 +28,7 @@
                     <input type="hidden" name="actual_method" value="DELETE">
                     <button>Delete</button>
                 </form>
-                <form action="{% url 'jobsauceapp:resource' resource.id %}" method="GET">
+                <form action="{% url 'jobsauceapp:edit' resource.id %}" method="GET">
                     {% csrf_token %}
                     <button>Edit</button>
                 </form>

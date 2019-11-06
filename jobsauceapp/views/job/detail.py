@@ -137,8 +137,22 @@ def job_details_form(request, job_id):
         form_data = request.POST
         last_id = None
 
-        # Check if this POST is for editing instead of creating
         if (
+            "actual_method" in form_data
+            and form_data["actual_method"] == "DELETE"
+        ):
+            with sqlite3.connect(Connection.db_path) as conn:
+                db_cursor = conn.cursor()
+
+                db_cursor.execute("""
+                    DELETE FROM jobsauceapp_job
+                    WHERE id = ?
+                """, (job_id,))
+
+            return redirect(reverse('jobsauceapp:jobs'))
+
+        # Check if this POST is for editing instead of creating
+        elif (
             "actual_method" in form_data
             and form_data["actual_method"] == "PUT"
         ):
@@ -191,18 +205,3 @@ def job_details_form(request, job_id):
                 (technology, job_id))
             
         return redirect(reverse('jobsauceapp:jobs'))
-
-        # Check if this POST is for deleting instead of creating
-        if (
-            "actual_method" in form_data
-            and form_data["actual_method"] == "DELETE"
-        ):
-            with sqlite3.connect(Connection.db_path) as conn:
-                db_cursor = conn.cursor()
-
-                db_cursor.execute("""
-                    DELETE FROM libraryapp_library
-                    WHERE id = ?
-                """, (library_id,))
-
-            return redirect(reverse('libraryapp:libraries'))

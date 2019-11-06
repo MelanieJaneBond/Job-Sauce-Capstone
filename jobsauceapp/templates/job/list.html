@@ -15,7 +15,16 @@
         </ul>
 
         <p> Application Submission Date: {{ job.date_of_submission }} </p>
-        <h6>to edit a job <a href="{% url 'jobsauceapp:job' job.id %}">click here</a></h6>
+        <form action="{% url 'jobsauceapp:job' job.id %}" method="POST">
+        {% csrf_token %}
+            <input type="hidden" name="actual_method" value="DELETE">
+            <button>Delete</button>
+        </form>
+        <form action="{% url 'jobsauceapp:job' job.id %}" method="GET">
+        {% csrf_token %}
+            <button>Edit</button>
+        </form>
+        {% comment %} <h6>to edit a job <a href="{% url 'jobsauceapp:job' job.id %}">click here</a></h6> {% endcomment %}
         <br></br>
     {% endfor %}
     </ol>

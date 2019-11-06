@@ -38,7 +38,7 @@ def create_resource(cursor, row):
     resource.tech_type_id = row[4]
     resource.user_id = row[5]
 
-    return (resource)
+    return resource
 
 def get_resource(resource_id):
     with sqlite3.connect(Connection.db_path) as conn:
@@ -54,6 +54,7 @@ def get_resource(resource_id):
             tech_type_id,
             user_id
             from jobsauceapp_resource
+        where id = ?
         """, (resource_id,))
 
         return db_cursor.fetchone()
@@ -69,16 +70,39 @@ def resource_form(request):
 
         return render(request, template, context)
 
-# def resource_edit_form(request, resource_id):
+def resource_edit_form(request, resource_id):
 
-#     if request.method == 'GET':
-#         resource = get_resource(resource_id)
-#         jobs = get_jobs()
+    if request.method == 'GET':
+        resource = get_resource(resource_id)
 
-#         template = 'resource/form.html'
-#         context = {
-#             'resource': resource,
-#             'all_jobs': jobs
-#         }
+        template = 'resource/edit.html'
+        context = {
+            'resource': resource
+        }
+    
+        return render(request, template, context)
 
-#         return render(request, template, context)
+    elif request.method == 'POST':
+        form_data = request.POST
+        
+        if (
+            "actual_method" in form_data
+            and form_data["actual_method"] == "PUT"
+        ):
+            with sqlite3.connect(Connection.db_path) as conn:
+                db_cursor = conn.cursor()
+                # resource_id = get_resource(resource_id)
+
+                db_cursor.execute("""
+                UPDATE jobsauceapp_resource
+                SET link_to_resource = ?,
+                    date_due = ?,
+                    is_complete = ?,
+                    tech_type_id = ?,
+                    user_id = ?
+                WHERE id = ?
+                """,
+                (form_data["link_to_resource"], form_data['date_due'],
+                    form_data['is_complete'], form_data['tech_type_id'], request.user.id, resource_id))
+                
+            return redirect(reverse('jobsauceapp:resources'))
