@@ -5,6 +5,13 @@ body {
     padding: 0;
     font-size: 1.5em;
     font-family: 'Poiret One', cursive;
+    background: url("https://photos.thetrek.co/wp-content/uploads/2018/08/23135335/green-tunnel-appalachian-trail1.png")no-repeat center center fixed;
+    width: 100%;
+}
+
+nav {
+    background-color: black;
+    width: 100%;
 }
 
 h2 {
@@ -16,6 +23,7 @@ h2 {
 }
 
 .navList {
+    color: white;
     list-style-type: none;
     display: flex;
     justify-content: center;
