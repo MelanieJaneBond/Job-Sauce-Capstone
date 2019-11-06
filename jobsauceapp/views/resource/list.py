@@ -43,6 +43,7 @@ def resource_list(request):
         }
 
         return render(request, template, context)
+        
     elif request.method == 'POST':
         form_data = request.POST
 

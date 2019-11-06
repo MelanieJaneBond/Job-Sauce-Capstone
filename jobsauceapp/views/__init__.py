@@ -8,8 +8,10 @@ from .job.detail import job_details_form
 
 from .response.list import response_list
 from .response.form import response_form, response_edit_form
-from .response.detail import response_details
+from .response.detail import response_details_form
 
 from .resource.list import resource_list
-from .resource.detail import resource_details
+from .resource.detail import resource_detail_form
 from .resource.form import resource_form
+
+from .auth.logout import logout_user

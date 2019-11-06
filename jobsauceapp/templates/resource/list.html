@@ -6,13 +6,12 @@
     <ol>
 
         {% for resource in all_resources %}
-            <h4>{{ resource.company_name }}</h4>
-            <p>Are you ready to learn about <a href="{{resource.link_to_resource}}">{{resource.tech_name}}</a>?</p>
+            <h4>Are you ready to learn about <a href="{{resource.link_to_resource}}">{{resource.tech_name}}</a>?</h4>
             <h5> {{ resource.due_date }} </h5>
             {% if resource.is_complete == "True" %}
             <h6> learned something new... #sick </h6>
             {% elif resource.is_complete == "False" %}
-            <h6> let's get down to business... #studyme </h6>
+            <p> let's get down to business... #studyme </p>
             {% endif %}
 
                     {% comment %} <form action="/action_page.php">
@@ -24,10 +23,14 @@
         {% comment %} THE ABOVE CONSTITUTES A TYPE OF EDIT BUTTON... {% endcomment %}
 
             <section id="resource-actions" style="display:flex;">
-                <form action="{% url 'jobsauceapp:resource_details' resource.id %}" method="POST">
+                <form action="{% url 'jobsauceapp:resource' resource.id %}" method="POST">
                     {% csrf_token %}
                     <input type="hidden" name="actual_method" value="DELETE">
                     <button>Delete</button>
+                </form>
+                <form action="{% url 'jobsauceapp:resource' resource.id %}" method="GET">
+                    {% csrf_token %}
+                    <button>Edit</button>
                 </form>
             </section>
 
