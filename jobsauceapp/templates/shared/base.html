@@ -22,8 +22,12 @@
             <li class="navList__route"><a href="{% url 'jobsauceapp:jobs' %}">Jobs</a></li>
             <li class="navList__route"><a href="{% url 'jobsauceapp:responses'%}">Responses</a></li>
             <li class="navList__route"><a href="{% url 'jobsauceapp:home' %}">GetTheJobSauce</a></li>
+            {% if user.is_authenticated %}
+            {% else %}
+            <li class="navList__route"><a href="{% url 'jobsauceapp:register' %}">Registration</a></li>
+            {% endif %}
             <li class="navList__route"><a href="{% url 'jobsauceapp:resources' %}">StudyStuffs</a></li>
-            {% comment %} <li class="navList__route"><a href="{% url 'jobsauceapp:register'%}">Register/Login</a></li> {% endcomment %}
+            <li class="navList__route"><a href="{% url 'jobsauceapp:login'%}">Login</a></li>
             {% comment %} <li class="navList__route"><a href="{% url 'jobsauceapp:responses' %}">Books</a></li> {% endcomment %}
             <li class="navList__route"><a href="{% url 'jobsauceapp:logout' %}">Logout</a></li>
         </ol>

@@ -23,7 +23,8 @@ urlpatterns = [
     path('resource/<str:resource_id>', resource_detail_form, name='resource'),
     path('resource/<str:resource_id>/edit', resource_edit_form, name='edit'),
 
-    url(r'accounts/', include('django.contrib.auth.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
     path('logout', logout_user, name='logout'),
+    # path('login', login_user, name='login'),
     path('register', register_user, name='register'),
 ]

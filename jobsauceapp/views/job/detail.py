@@ -5,18 +5,6 @@ from django.contrib.auth.decorators import login_required
 from jobsauceapp.models import Job, Company, Job_Tech, Tech_Type
 from ..connection import Connection
 
-#get one of job, company, and job_techs
-#you will be PUTTING for EACH ID so, you need a details.py
-# to organize the functionality of your code
-def create_company(cursor, row):
-    row = sqlite3.Row(cursor, row)
-
-    company = Company()
-    company.id = row[0]
-    company.name = row[1]
-
-    return (company,)
-
 def create_job(cursor, row):
     row = sqlite3.Row(cursor, row)
 
@@ -38,22 +26,6 @@ def create_job_tech(cursor, row):
     job_tech.job_id = row[2]
 
     return (job_tech,)
-
-def get_company(company_id):
-    with sqlite3.connect(Connection.db_path) as conn:
-        conn.row_factory = create_company
-        db_cursor = conn.cursor()
-
-        db_cursor.execute("""
-            SELECT
-                c.id,
-                c.name
-            FROM jobsauceapp_company c
-            WHERE c.id = ?
-            """, (company_id,)
-        )
-
-        return db_cursor.fetchone()
 
 def get_job(job_id):
     with sqlite3.connect(Connection.db_path) as conn:
@@ -119,13 +91,11 @@ def get_technologies():
 def job_details_form(request, job_id):
     if request.method == 'GET':
 
-        # company = get_company(company_id)
         job = get_job(job_id)
         job_tech = get_job_tech(job_id)
         technologies = get_technologies()
         template = 'job/form.html'
         context = {
-            # 'company': company,
             'all_technologies': technologies,
             'job': job,
             'job_tech': job_tech
@@ -151,7 +121,6 @@ def job_details_form(request, job_id):
 
             return redirect(reverse('jobsauceapp:jobs'))
 
-        # Check if this POST is for editing instead of creating
         elif (
             "actual_method" in form_data
             and form_data["actual_method"] == "PUT"

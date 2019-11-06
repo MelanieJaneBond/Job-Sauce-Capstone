@@ -14,7 +14,7 @@ def register_user(request):
       request -- The full HTTP request object
     '''
     if request.method == "GET":
-        template_name = 'auth/register.html'
+        template_name = 'registration/register.html'
         return render(request, template_name, {})
 
     elif request.method == "POST":

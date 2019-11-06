@@ -59,8 +59,7 @@ def job_list(request):
     elif request.method == 'POST':
         form_data = request.POST
         last_id = None
-    #form_data.getlist("technologies_list")
-    #make a for loop that will "for each technology in technology_list" insert into the tech_types table!
+
         with sqlite3.connect(Connection.db_path) as conn:
             db_cursor = conn.cursor()
             nothing = None
