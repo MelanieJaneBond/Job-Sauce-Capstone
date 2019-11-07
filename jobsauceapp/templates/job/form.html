@@ -14,15 +14,15 @@
             {% csrf_token %}
         <fieldset>
             <label for="company_name">Company Name: </label>
-            <input id="company_name" type="text" name="company_name" value="{{job.company.name}}">
+            <input id="company_name" type="text" name="company_name" required value="{{job.company.name}}">
         </fieldset>
         <fieldset>
             <label for="title_of_position">Title of Position: </label>
-            <input id="title_of_position" type="text" name="title_of_position" value="{{job.title_of_position}}">
+            <input id="title_of_position" type="text" name="title_of_position" required value="{{job.title_of_position}}">
         </fieldset>
             <fieldset>
                 <label for="technologies_list">What technologies did they list as necessary to the position?</label>
-                <select id="technologies_list" multiple="true" name="technologies_list">
+                <select id="technologies_list" multiple="true"  required name="technologies_list">
             {% for technologies in all_technologies %}
                 <option value="{{technologies.id}}">{{technologies.name}}</option>
             {% endfor %}
@@ -38,7 +38,7 @@
                 {% comment %} <input id="tech_list_id" type="hidden" name="tech_list_id" value="null"> {% endcomment %}
         <fieldset>
             <label for="date_of_submission">Date you Applied: </label>
-            <input id="date_of_submission" type="date" name="date_of_submission" value="{{job.date_of_submission}}">
+            <input id="date_of_submission" type="date" required name="date_of_submission" value="{{job.date_of_submission}}">
         </fieldset>
       <div>
 
