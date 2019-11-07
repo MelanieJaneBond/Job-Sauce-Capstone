@@ -16,18 +16,18 @@
                 <label for="job_id">Position: </label>
                 <select id="job_id" type="text" name="job_id">
                     {% for job in all_jobs %}
-                    <option {% if job.id == response.job_id %}selected{% endif %} value="{{ job.id }}">
+                    <option {% if job.id == response.job_id %}selected{% endif %} required value="{{ job.id }}">
                         {{ job.title_of_position }}</option>
                     {% endfor %}
                 </select>
             </fieldset>
             <fieldset>
                 <label for="details">What did they say?</label>
-                <input id="details" type="text" name="details" value="{{ response.details }}">
+                <input id="details" type="text" name="details" required value="{{ response.details }}">
             </fieldset>
             <fieldset>
                 <label for="date">Date of Response: </label>
-                <input id="date" type="date" name="date" value="{{ response.date }}">
+                <input id="date" type="date" name="date" required value="{{ response.date }}">
             </fieldset>
         
             <fieldset>

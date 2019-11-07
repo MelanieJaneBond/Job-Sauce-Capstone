@@ -16,18 +16,18 @@
                 <label for="tech_type_id">Technology to Study: </label>
                 <select id="tech_type_id" type="text" name="tech_type_id">
                         {% for tech_type in all_tech_types %}
-                        <option {{ tech_type.name }} selected value="{{tech_type.tech_type_id}}">
+                        <option {{ tech_type.name }} selected required value="{{tech_type.tech_type_id}}">
                         {{ tech_type.name }}</option>
                         {% endfor %}
                 </select>
             </fieldset>
             <fieldset>
                 <label for="link_to_resource">Add a Link to a Study Resource:</label>
-                <input id="link_to_resource" type="text" name="link_to_resource" value="{{ resource.link_to_resource }}">
+                <input id="link_to_resource" type="text" name="link_to_resource" required value="{{ resource.link_to_resource }}">
             </fieldset>
             <fieldset>
                 <label for="date_due">Due Date: </label>
-                <input id="date_due" type="date" name="date_due" value="{{ resource.date_due }}">
+                <input id="date_due" type="date" name="date_due" required value="{{ resource.date_due }}">
             </fieldset>
             <fieldset>
                 <input id="is_complete" type="checkbox" name="is_complete" value="False" checked> I have not yet studied this.<br>

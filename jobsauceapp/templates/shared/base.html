@@ -26,6 +26,7 @@
             <li class="navList__route"><a href="{% url 'jobsauceapp:logout' %}">Logout</a></li>
         {% else %}
             <li class="navList__route"><a href="{% url 'jobsauceapp:home' %}">GetTheJobSauce</a></li>
+            <li class="navList__route"><a href="{% url 'jobsauceapp:login' %}">Login</a></li>
             <li class="navList__route"><a href="{% url 'jobsauceapp:register' %}">Register</a></li>
         {% endif %}
         </ol>
