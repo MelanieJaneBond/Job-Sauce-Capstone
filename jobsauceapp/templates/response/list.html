@@ -3,16 +3,18 @@
 {% block content %}
     <div class="top">
         <h2>Responses</h2>
-        <h6>to enter a new response <a href="{% url 'jobsauceapp:response_form' %}">click here</a></h6>
+        <h5>to enter a new response <a href="{% url 'jobsauceapp:response_form' %}">click here</a></h5>
     </div>
 
-    <div class="listed">
-        <ol>
+        <ol class="listed">
 
         {% for response in all_responses %}
             <h4>From {{ response.name }},</h4>
-            <p>Regarding your application to the position of <strong>{{ response.title_of_position }}:</strong> "{{ response.details }}"</p>
-            <h5> {{ response.date }} </h5>
+            <ul>
+                <li>Regarding your application to the position of <strong>{{ response.title_of_position }}:</strong></li>
+                <li>"{{ response.details }}"</li>
+            </ul>
+            <p><strong> Replied on {{ response.date }} </strong></p>
             <section id="response-record-actions" style="display:flex;">
                 <form action="{% url 'jobsauceapp:response' response.id %}" method="POST">
                     {% csrf_token %}
@@ -25,7 +27,6 @@
                 </form>
             </section>
         {% endfor %}
-        </div>
     <br></br>
     </ol>
 {% endblock %}

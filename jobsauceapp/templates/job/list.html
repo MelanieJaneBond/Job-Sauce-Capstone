@@ -3,7 +3,7 @@
 {% block content %}
     <div class="top">
         <h2>Jobs you have applied for:</h2>
-        <h6>to enter a new job <a href="{% url 'jobsauceapp:job_form' %}">click here</a></h6>
+        <h5>to enter a new job <a href="{% url 'jobsauceapp:job_form' %}">click here</a></h5>
     </div>
 
     <ol class="listed">
@@ -12,20 +12,22 @@
         <p><strong> {{ job.title_of_position }} </strong></p>
         <ul>
             {% for tech_type in job.tech_types %}
-                <li>{{ tech_type.name }}</li>
+                <li><strong>{{ tech_type.name }}</strong></li>
             {% endfor %}
         </ul>
 
-        <p> Application Submission Date: {{ job.date_of_submission }} </p>
-        <form action="{% url 'jobsauceapp:job' job.id %}" method="POST">
-        {% csrf_token %}
-            <input type="hidden" name="actual_method" value="DELETE">
-            <button>Delete</button>
-        </form>
-        <form action="{% url 'jobsauceapp:job' job.id %}" method="GET">
-        {% csrf_token %}
-            <button>Edit</button>
-        </form>
+        <p><strong> Application Submission Date: {{ job.date_of_submission }} </strong></p>
+        <section id="response-record-actions" style="display:flex;">
+            <form action="{% url 'jobsauceapp:job' job.id %}" method="POST">
+            {% csrf_token %}
+                <input type="hidden" name="actual_method" value="DELETE">
+                <button>Delete</button>
+            </form>
+            <form action="{% url 'jobsauceapp:job' job.id %}" method="GET">
+            {% csrf_token %}
+                <button>Edit</button>
+            </form>
+        </section>
         {% comment %} <h6>to edit a job <a href="{% url 'jobsauceapp:job' job.id %}">click here</a></h6> {% endcomment %}
         <br></br>
     {% endfor %}

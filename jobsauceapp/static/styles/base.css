@@ -4,8 +4,10 @@ body {
     margin: 0;
     padding: 0;
     font-size: 1.5em;
-    font-family: 'Poiret One', cursive;
-    background: url("https://photos.thetrek.co/wp-content/uploads/2018/08/23135335/green-tunnel-appalachian-trail1.png")no-repeat center center fixed;
+    /* font-family: 'Poiret One', cursive; */
+    font-family: 'Cabin Condensed', sans-serif;
+    /* background: url("https://photos.thetrek.co/wp-content/uploads/2018/08/23135335/green-tunnel-appalachian-trail1.png")no-repeat center center fixed; */
+    background: url("http://appalachiantrail.org/images/default-source/default-album/trailfocus.jpg?sfvrsn=2")no-repeat center center fixed;
     width: 100%;
 }
 
@@ -17,20 +19,29 @@ nav {
 .top {
     background-color: antiquewhite;
     opacity: 0.6;
+    padding-left: 15px;
+    padding-bottom: 5px;
+    width: 50%;
 }
 
 .listed {
-    background-color: antiquewhite;
-    opacity: 0.6;
+    /* background-color: antiquewhite; */
+    background-color: chocolate;
+    opacity: 0.75;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 15px;
+    width: 75%;
 }
 
 .form {
-    background-color: beige;
-    opacity: 0.8;
+    background-color: chocolate;
+    opacity: 0.75;
 }
 
 h2 {
     font-family: 'Saira Condensed', sans-serif;
+    text-shadow: 2px 2px chocolate;
 }
 
 .main-content {
@@ -51,3 +62,13 @@ h2 {
     margin: 0 0.5em;
     font-family: 'Saira Condensed', sans-serif;
 }
+
+a:link {
+    text-decoration: none;
+    color: chocolate;
+  }
+  
+  a:visited {
+    text-decoration: none;
+    color: chocolate;
+  }
