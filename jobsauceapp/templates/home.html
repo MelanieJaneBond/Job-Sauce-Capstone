@@ -1,9 +1,25 @@
 {% extends 'shared/base.html' %}
 
 {% block content %}
-<div class="top"
-    <h1>Come and get The Job Sauce...</h1>
-    <p>I'll put some stuff here to encourage you in your job acquisition journey!</p>
+<div class="top">
+    <h2>Come and get The Job Sauce...</h2>
+    <h5>to start recording your journey <a href="{% url 'jobsauceapp:login' %}">click here</a></h5>
 </div>
+
+<ol class="listed">
+    <p><strong>
+    Statistics say it can take a Jr Dev three to six months to acquire a new job. Don't panic!
+    </strong></p>
+    <p><strong>This website is designed to help you calmly stay in the job-search game.</strong></p>
+    <ul>
+        <li>Track the jobs you have applied to by listing the company's name, the position title, the technologies
+        necessary to the position, and, the date on which you applied.</li>
+        <li>Record responses - whether you heard it in an email or over the phone, record the feedback you recieved
+        so that you can set better goals and stay focused during interviews.</li>
+        <li>Finally, use the StudyStuffs page on this website to select technologies specific to the job you want.
+        Add a link to a resource where you can learn more about the technologies you want to master.</li>
+    </ul>
+    <h5>Remember to be your own best friend. Get yourself some job sauce!</h5>
+</ol>
 
 {% endblock %}

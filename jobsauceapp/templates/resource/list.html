@@ -3,27 +3,20 @@
 {% block content %}
     <div class="top">
         <h2>Study Resources</h2>
-        <h6>to enter a new study resource link <a href="{% url 'jobsauceapp:resource_form' %}">click here</a></h6>
+        <h5>to enter a new study resource link <a href="{% url 'jobsauceapp:resource_form' %}">click here</a></h5>
     </div>
 
     <ol class="listed">
 
         {% for resource in all_resources %}
-            <p><strong>Are you ready to learn about <a href="{{resource.link_to_resource}}">{{resource.tech_name}}</a>?</strong></p>
+            <p><strong>Are you ready to learn about {{resource.tech_name}}?</strong></p>
+            <button><a href="{{resource.link_to_resource}}">start your homework</a></button>
             <h5>Try to study it by... {{ resource.date_due }} </h5>
             {% if resource.is_complete == "True" %}
             {% comment %} <h6> learned something new... #sick </h6> {% endcomment %}
             {% elif resource.is_complete == "False" %}
             {% comment %} <p> let's get down to business... #studyme </p> {% endcomment %}
             {% endif %}
-
-                    {% comment %} <form action="/action_page.php">
-            <input type="checkbox" name="is_complete" value="True"> I have finished studying this tech resource.<br>
-            <input type="checkbox" name="is_complete" value="False" checked> I have not yet studied this.<br>
-            <input type="submit" value="Submit">
-        </form> {% endcomment %}
-
-        {% comment %} THE ABOVE CONSTITUTES A TYPE OF EDIT BUTTON... {% endcomment %}
 
             <section id="resource-actions" style="display:flex;">
                 <form action="{% url 'jobsauceapp:resource' resource.id %}" method="POST">
