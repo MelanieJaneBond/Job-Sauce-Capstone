@@ -18,7 +18,7 @@ nav {
 
 .top {
     background-color: antiquewhite;
-    opacity: 0.6;
+    opacity: 0.75;
     padding-left: 15px;
     padding-bottom: 5px;
     width: 50%;
@@ -27,7 +27,7 @@ nav {
 .listed {
     /* background-color: antiquewhite; */
     background-color: chocolate;
-    opacity: 0.75;
+    opacity: 0.85;
     padding-top: 5px;
     padding-bottom: 5px;
     padding-right: 15px;
@@ -36,7 +36,7 @@ nav {
 
 .form {
     background-color: chocolate;
-    opacity: 0.75;
+    opacity: 0.85;
 }
 
 h2 {
