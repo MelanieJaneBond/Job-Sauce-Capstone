@@ -22,7 +22,7 @@
         </fieldset>
             <fieldset>
                 <label for="technologies_list">What technologies did they list as necessary to the position?</label>
-                <select id="technologies_list" multiple="true"  required name="technologies_list">
+                <select id="technologies_list" multiple="true" required name="technologies_list">
             {% for technologies in all_technologies %}
                 <option value="{{technologies.id}}">{{technologies.name}}</option>
             {% endfor %}
