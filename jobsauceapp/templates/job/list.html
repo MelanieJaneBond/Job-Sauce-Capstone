@@ -1,10 +1,12 @@
 {% extends 'shared/base.html' %}
 
 {% block content %}
-    <h2>Jobs you have applied for:</h2>
-    <h6>to enter a new job <a href="{% url 'jobsauceapp:job_form' %}">click here</a></h6>
+    <div class="top">
+        <h2>Jobs you have applied for:</h2>
+        <h6>to enter a new job <a href="{% url 'jobsauceapp:job_form' %}">click here</a></h6>
+    </div>
 
-    <ol>
+    <ol class="listed">
     {% for job in all_jobs %}
         <h4> {{ job.company_name }} </h4>
         <p><strong> {{ job.title_of_position }} </strong></p>

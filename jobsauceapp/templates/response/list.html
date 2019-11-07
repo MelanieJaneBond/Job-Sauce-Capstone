@@ -1,9 +1,13 @@
 {% extends 'shared/base.html' %}
 
 {% block content %}
-    <h2>Responses</h2>
-    <h6>to enter a new response <a href="{% url 'jobsauceapp:response_form' %}">click here</a></h6>
-    <ol>
+    <div class="top">
+        <h2>Responses</h2>
+        <h6>to enter a new response <a href="{% url 'jobsauceapp:response_form' %}">click here</a></h6>
+    </div>
+
+    <div class="listed">
+        <ol>
 
         {% for response in all_responses %}
             <h4>From {{ response.name }},</h4>
@@ -21,6 +25,7 @@
                 </form>
             </section>
         {% endfor %}
+        </div>
     <br></br>
     </ol>
 {% endblock %}

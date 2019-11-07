@@ -1,42 +1,46 @@
 {% extends 'shared/base.html' %}
 
 {% block content %}
-    <h2>Enter a Job You've Applied to:</h2>
+    <div class="top">
+        <h2>Enter a Job You've Applied to:</h2>
+    </div>
 
-    {% if job.id is not None %}
-        <form action="{% url 'jobsauceapp:job' job.id %}" method="post">
-    {% else %}
-        <form action="{% url 'jobsauceapp:jobs' %}" method="post">
-    {% endif %}
-        {% csrf_token %}
-      <fieldset>
-          <label for="company_name">Company Name: </label>
-          <input id="company_name" type="text" name="company_name" value="{{job.company.name}}">
-      </fieldset>
-      <fieldset>
-          <label for="title_of_position">Title of Position: </label>
-          <input id="title_of_position" type="text" name="title_of_position" value="{{job.title_of_position}}">
-      </fieldset>
+    <div class="form">
+        {% if job.id is not None %}
+            <form action="{% url 'jobsauceapp:job' job.id %}" method="post">
+        {% else %}
+            <form action="{% url 'jobsauceapp:jobs' %}" method="post">
+        {% endif %}
+            {% csrf_token %}
         <fieldset>
-            <label for="technologies_list">What technologies did they list as necessary to the position?</label>
-            <select id="technologies_list" multiple="true" name="technologies_list">
-        {% for technologies in all_technologies %}
-            <option value="{{technologies.id}}">{{technologies.name}}</option>
-        {% endfor %}
-            </select>
-            <h6>Press CTRL and click tech to select multiple options at once.</h6>
-            <input type="button" onclick="multipleFunc()" value="select multiple options">
+            <label for="company_name">Company Name: </label>
+            <input id="company_name" type="text" name="company_name" value="{{job.company.name}}">
         </fieldset>
-      <script>
-         function multipleFunc() {
-            document.getElementById("technologies_list").multiple = true;
-         }
-      </script>
-            {% comment %} <input id="tech_list_id" type="hidden" name="tech_list_id" value="null"> {% endcomment %}
-      <fieldset>
-          <label for="date_of_submission">Date you Applied: </label>
-          <input id="date_of_submission" type="date" name="date_of_submission" value="{{job.date_of_submission}}">
-      </fieldset>
+        <fieldset>
+            <label for="title_of_position">Title of Position: </label>
+            <input id="title_of_position" type="text" name="title_of_position" value="{{job.title_of_position}}">
+        </fieldset>
+            <fieldset>
+                <label for="technologies_list">What technologies did they list as necessary to the position?</label>
+                <select id="technologies_list" multiple="true" name="technologies_list">
+            {% for technologies in all_technologies %}
+                <option value="{{technologies.id}}">{{technologies.name}}</option>
+            {% endfor %}
+                </select>
+                <h6>Press CTRL and click tech to select multiple options at once.</h6>
+                {% comment %} <input type="button" onclick="multipleFunc()" value="select multiple options"> {% endcomment %}
+            </fieldset>
+        {% comment %} <script>
+            function multipleFunc() {
+                document.getElementById("technologies_list").multiple = true;
+            }
+        </script> {% endcomment %}
+                {% comment %} <input id="tech_list_id" type="hidden" name="tech_list_id" value="null"> {% endcomment %}
+        <fieldset>
+            <label for="date_of_submission">Date you Applied: </label>
+            <input id="date_of_submission" type="date" name="date_of_submission" value="{{job.date_of_submission}}">
+        </fieldset>
+      <div>
 
       {% if job.id is not None %}
             <input type="hidden" name="actual_method" value="PUT">

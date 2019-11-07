@@ -1,31 +1,35 @@
 {% extends 'shared/base.html' %}
 
 {% block content %}
-    <h2>Edit this Study Resource</h2>
+    <div class="top">
+        <h2>Edit this Study Resource</h2>
+    </div>
 
-    {% if resource.id is not None %}
-        <form action="{% url 'jobsauceapp:edit' resource.id %}" method="post">
-    {% else %}
-        <form action="{% url 'jobsauceapp:resources' %}" method="post">
-    {% endif %}
-        {% csrf_token %}
-        <fieldset>
-            <label for="tech_type_id">Technology to Study: </label>
-            <select id="tech_type_id" type="text" name="tech_type_id">
-                <option {{ resource.tech_type.name }} selected value="{{resource.tech_type_id}}">{{ resource.tech_type.name }}</option>
-            </select>
-        </fieldset>
-        <fieldset>
-            <label for="link_to_resource">Add a Link to a Study Resource:</label>
-            <input id="link_to_resource" type="text" name="link_to_resource" value="{{ resource.link_to_resource }}">
-        </fieldset>
-        <fieldset>
-            <label for="date_due">Due Date: </label>
-            <input id="date_due" type="date" name="date_due" value="{{ resource.date_due }}">
-        </fieldset>
-        <fieldset>
-            <input id="is_complete" type="checkbox" name="is_complete" value="False" checked> I have not yet studied this.<br>
-        </fieldset>
+    <div class="form">
+        {% if resource.id is not None %}
+            <form action="{% url 'jobsauceapp:edit' resource.id %}" method="post">
+        {% else %}
+            <form action="{% url 'jobsauceapp:resources' %}" method="post">
+        {% endif %}
+            {% csrf_token %}
+            <fieldset>
+                <label for="tech_type_id">Technology to Study: </label>
+                <select id="tech_type_id" type="text" name="tech_type_id">
+                    <option {{ resource.tech_type.name }} selected value="{{resource.tech_type_id}}">{{ resource.tech_type.name }}</option>
+                </select>
+            </fieldset>
+            <fieldset>
+                <label for="link_to_resource">Add a Link to a Study Resource:</label>
+                <input id="link_to_resource" type="text" name="link_to_resource" value="{{ resource.link_to_resource }}">
+            </fieldset>
+            <fieldset>
+                <label for="date_due">Due Date: </label>
+                <input id="date_due" type="date" name="date_due" value="{{ resource.date_due }}">
+            </fieldset>
+            <fieldset>
+                <input id="is_complete" type="checkbox" name="is_complete" value="False" checked> I have not yet studied this.<br>
+            </fieldset>
+    </div>
 
         {% if resource.id is not None %}
             <input type="hidden" name="actual_method" value="PUT">

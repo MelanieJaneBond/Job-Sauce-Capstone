@@ -1,8 +1,12 @@
 {% extends 'shared/base.html' %}
 
 {% block content %}
-    <h2>Study Resources</h2>
-    <h6>to enter a new study resource link <a href="{% url 'jobsauceapp:resource_form' %}">click here</a></h6>
+    <div class="top">
+        <h2>Study Resources</h2>
+        <h6>to enter a new study resource link <a href="{% url 'jobsauceapp:resource_form' %}">click here</a></h6>
+    </div>
+
+    <div class="listed">
     <ol>
 
         {% for resource in all_resources %}
@@ -33,8 +37,8 @@
                     <button>Edit</button>
                 </form>
             </section>
-
         {% endfor %}
+    </div>
         <br></br>
     </ol>
 {% endblock %}

@@ -6,7 +6,6 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 
-
 @csrf_exempt
 def register_user(request):
     '''Handles the creation of a new user for authentication
@@ -14,7 +13,7 @@ def register_user(request):
       request -- The full HTTP request object
     '''
     if request.method == "GET":
-        template_name = 'auth/register.html'
+        template_name = 'registration/register.html'
         return render(request, template_name, {})
 
     elif request.method == "POST":
@@ -24,7 +23,10 @@ def register_user(request):
         # on Django's built-in User model
         new_user = User.objects.create_user(
             username=form_data['username'],
-            password=form_data['password']
+            email=form_data['email'],
+            password=form_data['password'],
+            first_name=form_data['first_name'],
+            last_name=form_data['last_name']
         )
 
         authenticated_user = authenticate(username=form_data['username'], password=form_data['password'])
@@ -32,7 +34,7 @@ def register_user(request):
         # If authentication was successful, log the user in
         if authenticated_user is not None:
             login(request=request, user=authenticated_user)
-            return redirect(reverse('jobsauceapp:home'))
+            return redirect(reverse('jobsauceapp:jobs'))
 
         else:
             # Bad login details were provided. So we can't log the user in.
