@@ -6,8 +6,7 @@
         <h6>to enter a new response <a href="{% url 'jobsauceapp:response_form' %}">click here</a></h6>
     </div>
 
-    <div class="listed">
-        <ol>
+        <ol class="listed">
 
         {% for response in all_responses %}
             <h4>From {{ response.name }},</h4>
@@ -25,7 +24,6 @@
                 </form>
             </section>
         {% endfor %}
-        </div>
     <br></br>
     </ol>
 {% endblock %}
