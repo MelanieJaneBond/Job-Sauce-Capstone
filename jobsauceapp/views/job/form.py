@@ -66,34 +66,10 @@ def job_form(request):
 
     if request.method == 'GET':
         technologies = get_technologies()
-        # jobs = get_jobs()
-        # job_technologies = {}
-        # for (job, tech_type) in jobs:
-        #     if job.title_of_position not in job_technologies:
-        #         job_technologies[job.title_of_position] = job
-        #         job_technologies[job.title_of_position].tech_types.append(tech_type)
-        #     else:
-        #         job_technologies[job.title_of_position].tech_types.append(tech_type)
 
         template = 'job/form.html'
         context = {
-            # 'all_jobs': job_technologies.values()
             'all_technologies': technologies
         }
 
         return render(request, template, context)
-
-# @login_required
-# def book_edit_form(request, book_id):
-
-#     if request.method == 'GET':
-#         book = get_book(book_id)
-#         libraries = get_libraries()
-
-#         template = 'books/form.html'
-#         context = {
-#             'book': book,
-#             'all_libraries': libraries
-#         }
-
-#         return render(request, template, context)
