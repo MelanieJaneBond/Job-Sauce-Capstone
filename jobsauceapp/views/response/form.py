@@ -48,28 +48,29 @@ def create_job_table(cursor, row):
 
     return (job)
     
-def get_jobs():
+def get_jobs(request):
     with sqlite3.connect(Connection.db_path) as conn:
         conn.row_factory = create_job_table
         db_cursor = conn.cursor()
 
         db_cursor.execute("""
         select
-            id,
-            title_of_position,
-            date_of_submission,
-            company_id,
-            tech_list_id,
-            user_id 
-        from jobsauceapp_job
-        """)
+            j.id,
+            j.title_of_position,
+            j.date_of_submission,
+            j.company_id,
+            j.tech_list_id,
+            j.user_id 
+            from jobsauceapp_job j
+        where j.user_id = ?
+        """, (request.user.id,))
 
         return db_cursor.fetchall()
 
 def response_form(request):
 
     if request.method == 'GET':
-        jobs = get_jobs()
+        jobs = get_jobs(request)
         template = 'response/form.html'
         context = {
             'all_jobs': jobs
