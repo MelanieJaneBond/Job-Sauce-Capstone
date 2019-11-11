@@ -11,12 +11,12 @@
         {% for resource in all_resources %}
             <p><strong>Are you ready to learn about {{resource.tech_name}}?</strong></p>
             <button><a href="{{resource.link_to_resource}}">start your homework</a></button>
-            <h5>Try to study it by... {{ resource.date_due }} </h5>
             {% if resource.is_complete == "True" %}
-            {% comment %} <h6> learned something new... #sick </h6> {% endcomment %}
+            <h6>learned something new... #sick</h6>
             {% elif resource.is_complete == "False" %}
-            {% comment %} <p> let's get down to business... #studyme </p> {% endcomment %}
+            <h6>let's get down to business... #studyme </h6>
             {% endif %}
+            <p><strong>Goal Due Date: {{ resource.date_due }} </strong></p>
 
             <section id="resource-actions" style="display:flex;">
                 <form action="{% url 'jobsauceapp:resource' resource.id %}" method="POST">
