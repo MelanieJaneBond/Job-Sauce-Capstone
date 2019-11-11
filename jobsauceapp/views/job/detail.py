@@ -151,7 +151,6 @@ def job_details_form(request, job_id):
 
             return redirect(reverse('jobsauceapp:jobs'))
 
-        # Check if this POST is for editing instead of creating
         elif (
             "actual_method" in form_data
             and form_data["actual_method"] == "PUT"
