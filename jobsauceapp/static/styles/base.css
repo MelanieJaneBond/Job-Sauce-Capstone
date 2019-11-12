@@ -1,4 +1,8 @@
-
+.flex-container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+}
 
 body {
     margin: 0;
@@ -27,10 +31,15 @@ nav {
     /* background-color: antiquewhite; */
     background-color: chocolate;
     opacity: 0.85;
-    padding-top: 5px;
+    /* padding-top: 5px;
     padding-bottom: 5px;
-    padding-right: 15px;
+    padding-right: 15px; */
     width: 75%;
+}
+
+.text-in-container {
+    display: flex;
+    flex-flow: column wrap;
 }
 
 .form {
