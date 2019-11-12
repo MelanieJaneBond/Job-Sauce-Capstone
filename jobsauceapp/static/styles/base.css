@@ -1,7 +1,17 @@
 .flex-container {
     display: flex;
     flex-flow: row wrap;
-    justify-content: space-around;
+    justify-content: flex-start;
+}
+
+.text-in-container {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-content: center;
+    background-color: chocolate;
+    opacity: 0.85;
+    width: 35%;
 }
 
 body {
@@ -27,20 +37,16 @@ nav {
     width: 50%;
 }
 
-.listed {
+/* .listed {
     /* background-color: antiquewhite; */
-    background-color: chocolate;
-    opacity: 0.85;
+    /* background-color: chocolate;
+    opacity: 0.85; */
     /* padding-top: 5px;
     padding-bottom: 5px;
     padding-right: 15px; */
-    width: 75%;
-}
+    /* width: 75%; */
+/* } */
 
-.text-in-container {
-    display: flex;
-    flex-flow: column wrap;
-}
 
 .form {
     background-color: chocolate;
