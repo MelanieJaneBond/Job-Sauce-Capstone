@@ -13,17 +13,22 @@ def create_tech_table(cursor, row):
 
     return (tech_type)
 
-def get_tech():
+def get_tech(request):
     with sqlite3.connect(Connection.db_path) as conn:
         conn.row_factory = create_tech_table
         db_cursor = conn.cursor()
 
         db_cursor.execute("""
         select
-            id as tech_type_id,
-            name
-        from jobsauceapp_tech_type
-        """)
+            tt.id as tech_type_id,
+            tt.name
+        from jobsauceapp_tech_type tt
+            join jobsauceapp_job_tech jt on jt.tech_type_id = tt.id
+            join jobsauceapp_job j on j.id = jt.job_id
+        where j.user_id = ?
+        """, (request.user.id,))
+
+
 
         return db_cursor.fetchall()
 
@@ -62,7 +67,7 @@ def get_resource(resource_id):
 def resource_form(request):
 
     if request.method == 'GET':
-        tech_types = get_tech()
+        tech_types = get_tech(request)
         template = 'resource/form.html'
         context = {
             'all_tech_types': tech_types
