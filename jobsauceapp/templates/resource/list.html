@@ -7,8 +7,9 @@
     </div>
 
     <ol class="listed">
-
+    <div class="flex-container">
         {% for resource in all_resources %}
+        <div class="text-in-container">
             <p><strong>Are you ready to learn about {{resource.tech_name}}?</strong></p>
             <button><a href="{{resource.link_to_resource}}">start your homework</a></button>
             {% if resource.is_complete == "True" %}
@@ -29,7 +30,9 @@
                     <button>Edit</button>
                 </form>
             </section>
+        </div>
         {% endfor %}
         <br></br>
+    </div>
     </ol>
 {% endblock %}
