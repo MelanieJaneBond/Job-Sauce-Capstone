@@ -7,7 +7,9 @@
     </div>
 
     <ol class="listed">
+    <div class="flex-container">
     {% for job in all_jobs %}
+        <div class="text-in-container">
         <h4> {{ job.company_name }} </h4>
         <p><strong> {{ job.title_of_position }} </strong></p>
         <ul>
@@ -29,6 +31,8 @@
             </form>
         </section>
         <br></br>
+    </div>
     {% endfor %}
+    </div>
     </ol>
 {% endblock %}

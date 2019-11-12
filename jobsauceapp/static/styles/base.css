@@ -1,4 +1,19 @@
+.flex-container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    align-content: flex-start;
+}
 
+.text-in-container {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-content: center;
+    background-color: chocolate;
+    opacity: 0.85;
+    width: 35%;
+}
 
 body {
     margin: 0;
@@ -23,15 +38,16 @@ nav {
     width: 50%;
 }
 
-.listed {
+/* .listed {
     /* background-color: antiquewhite; */
-    background-color: chocolate;
-    opacity: 0.85;
-    padding-top: 5px;
+    /* background-color: chocolate;
+    opacity: 0.85; */
+    /* padding-top: 5px;
     padding-bottom: 5px;
-    padding-right: 15px;
-    width: 75%;
-}
+    padding-right: 15px; */
+    /* width: 75%; */
+/* } */
+
 
 .form {
     background-color: chocolate;

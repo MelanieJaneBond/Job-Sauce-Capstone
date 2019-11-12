@@ -7,8 +7,9 @@
     </div>
 
         <ol class="listed">
-
+        <div class="flex-container">
         {% for response in all_responses %}
+        <div class="text-in-container">
             <h4>From {{ response.name }},</h4>
             <ul>
                 <li>Regarding your application to the position of <strong>{{ response.title_of_position }}:</strong></li>
@@ -26,7 +27,9 @@
                     <button>Edit</button>
                 </form>
             </section>
+        </div>
         {% endfor %}
     <br></br>
+    </div>
     </ol>
 {% endblock %}
