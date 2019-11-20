@@ -1,11 +1,16 @@
 ### Installing
 
 Clone down this repository and cd into it.
->if you are on a Windows machine, you will need to open the files in your command terminal in order to create the virtual environment.
+>if you are on a Windows machine, you will need to open the files in your command terminald - not the same as Git Bash - in order to create the virtual environment.
+
 Once inside the repository, cd into `jobsauceEnv` and then cd into `Scripts`
-Create your virtual environment by typing the command `activate.bat` and then cd back to where you were before `jobsauceEnv`
->you should be back inside the main folder with files called "jobsauceapp, jobsauceEnv, and the README" inside of it.
-Install the app's dependencies:
+Create your virtual environment by typing the command
+```
+activate.bat
+```
+then cd back to where you were before; you should be back inside the main folder with files called "jobsauceapp, jobsauceEnv, and the README" inside of it.
+
+### Install the app's dependencies:
 ```
 pip install -r requirements.txt
 ```
