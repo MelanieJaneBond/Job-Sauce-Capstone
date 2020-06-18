@@ -1,11 +1,11 @@
 {% extends 'shared/base.html' %}
 
 {% block content %}
-    <div class="top">
+    <div class="jumbotron">
         <h2>Create a New Study Resource based on your Jobs' required Tech</h2>
     </div>
 
-    <div class="form">
+    <div class="col-lg-8">
         {% if resource.id is not None %}
             <form action="{% url 'jobsauceapp:resource' resource.id %}" method="post">
         {% else %}
@@ -33,14 +33,14 @@
                 <input id="is_complete" type="checkbox" name="is_complete" required value="False" checked> I have not yet studied this.<br>
             </fieldset>
     </div>
-
+    <div class="col-lg-8">
         {% if resource.id is not None %}
             <input type="hidden" name="actual_method" value="PUT">
             <input type="submit" value="Update" />
         {% else %}
             <input type="submit" value="Create" />
         {% endif %}
-
+    </div>
     </form>
 
 {% endblock %}

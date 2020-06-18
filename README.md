@@ -30,6 +30,7 @@ Enter this command and you should be able to access this project on the server s
 python manage.py runserver
 ```
 Ctrl+C to quit
+p.s. my terminal instructs me that the project is at http://127.0.0.1:8000/ but it runs better at http://localhost:8000/ 
 
 ## Questions
 Please feel free to find me on LinkedIn or email me `miss.bond2@gmail.com` if you have questions about getting this up and running. I used a SQLite database and there may be a part of this README missing where I should explain how to create a connection to a database on your machine.

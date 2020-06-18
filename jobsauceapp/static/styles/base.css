@@ -3,6 +3,7 @@
     flex-flow: row wrap;
     justify-content: space-evenly;
     align-content: flex-start;
+    margin-top: 10px;
 }
 
 .text-in-container {
@@ -21,12 +22,13 @@ body {
     font-size: 1.5em;
     /* font-family: 'Poiret One', cursive; */
     font-family: 'Cabin Condensed', sans-serif;
-    background: url("http://appalachiantrail.org/images/default-source/default-album/trailfocus.jpg?sfvrsn=2")no-repeat center center fixed;
+    /* background: url("http://appalachiantrail.org/images/default-source/default-album/trailfocus.jpg?sfvrsn=2")no-repeat center center fixed; */
     width: 100%;
 }
 
 nav {
     background-color: black;
+    font-size: 1.75em;
     width: 100%;
 }
 
@@ -38,15 +40,10 @@ nav {
     width: 50%;
 }
 
-/* .listed {
-    /* background-color: antiquewhite; */
-    /* background-color: chocolate;
-    opacity: 0.85; */
-    /* padding-top: 5px;
-    padding-bottom: 5px;
-    padding-right: 15px; */
-    /* width: 75%; */
-/* } */
+.listed {
+    padding-top: 12px;
+    margin: 5px;
+}
 
 
 .form {
@@ -68,8 +65,8 @@ h2 {
     list-style-type: none;
     display: flex;
     justify-content: center;
-    border: 1px solid lightgray;
-    padding: 1em;
+    /* border: 1px solid lightgray; */
+    padding: 0.3em;
     margin: 0;
 }
 
@@ -80,10 +77,10 @@ h2 {
 
 a:link {
     text-decoration: none;
-    color: chocolate;
+    color: black;
   }
   
-  a:visited {
+a:visited {
     text-decoration: none;
     color: chocolate;
   }

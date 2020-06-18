@@ -1,33 +1,34 @@
 {% extends 'shared/base.html' %}
 
 {% block content %}
-    <div class="top">
+    <div class="jumbotron">
         <h2>Study Resources</h2>
         <h5>to enter a new study resource link <a href="{% url 'jobsauceapp:resource_form' %}">click here</a></h5>
     </div>
 
-    <ol class="listed">
-    <div class="flex-container">
+    <ul class="col-md-6">
+    <div class="col-md-6">
         {% for resource in all_resources %}
-        <div class="text-in-container">
+        <div>
             <p><strong>Are you ready to learn about {{resource.tech_name}}?</strong></p>
-            <button><a href="{{resource.link_to_resource}}">start your homework</a></button>
+            <button class="btn btn-danger"><a href="{{resource.link_to_resource}}">start your homework</a></button>
             {% if resource.is_complete == "True" %}
-            <h6>learned something new... #sick</h6>
+            {% comment %} <li class="label label-default">learned something new... #sick {% endcomment %}
             {% elif resource.is_complete == "False" %}
-            <h6>let's get down to business... #studyme </h6>
+            {% comment %} <li>let's get down to business... #studyme {% endcomment %}
             {% endif %}
-            <p><strong>Goal Due Date: {{ resource.date_due }} </strong></p>
-
+            <p class="label label-default">
+            <span class="label label-default">Goal Due Date: {{ resource.date_due }} </span>
+            </p>
             <section id="resource-actions" style="display:flex;">
                 <form action="{% url 'jobsauceapp:resource' resource.id %}" method="POST">
                     {% csrf_token %}
                     <input type="hidden" name="actual_method" value="DELETE">
-                    <button>Delete</button>
+                    <button class="btn btn-warning">Delete</button>
                 </form>
                 <form action="{% url 'jobsauceapp:edit' resource.id %}" method="GET">
                     {% csrf_token %}
-                    <button>Edit</button>
+                    <button class="btn btn-success">Edit</button>
                 </form>
             </section>
         </div>

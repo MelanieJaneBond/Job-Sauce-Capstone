@@ -1,26 +1,26 @@
 {% extends 'shared/base.html' %}
 
 {% block content %}
-    <div class="top">
+    <div class="jumbotron">
         <h2>Enter a Job You've Applied to:</h2>
     </div>
 
-    <div class="form">
+    <div class="col-lg-8">
         {% if job.id is not None %}
             <form action="{% url 'jobsauceapp:job' job.id %}" method="post">
         {% else %}
             <form action="{% url 'jobsauceapp:jobs' %}" method="post">
         {% endif %}
             {% csrf_token %}
-        <fieldset>
+        <fieldset class="col-lg-6">
             <label for="company_name">Company Name: </label>
             <input id="company_name" type="text" name="company_name" required value="{{job.company.name}}">
         </fieldset>
-        <fieldset>
+        <fieldset class="col-lg-6">
             <label for="title_of_position">Title of Position: </label>
             <input id="title_of_position" type="text" name="title_of_position" required value="{{job.title_of_position}}">
         </fieldset>
-            <fieldset>
+            <fieldset class="col-lg-6">
                 <label for="technologies_list">What technologies did they list as necessary to the position?</label>
                 <select id="technologies_list" multiple="true" required name="technologies_list">
             {% for technologies in all_technologies %}
@@ -29,11 +29,11 @@
                 </select>
                 <h6>Press CTRL and click tech to select multiple options at once.</h6>
             </fieldset>
-        <fieldset>
+        <fieldset class="col-lg-6">
             <label for="date_of_submission">Date you Applied: </label>
             <input id="date_of_submission" type="date" required name="date_of_submission" value="{{job.date_of_submission}}">
         </fieldset>
-      <div>
+      <div class="col-lg-6">
 
       {% if job.id is not None %}
             <input type="hidden" name="actual_method" value="PUT">
