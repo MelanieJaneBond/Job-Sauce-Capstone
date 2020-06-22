@@ -56,6 +56,17 @@ h2 {
     text-shadow: 2px 2px chocolate;
 }
 
+p {
+    font-family: 'Saira Condensed', sans-serif;
+    text-shadow: 1px 1px chocolate;
+}
+
+button {
+    font-family: 'Saira Condensed', sans-serif;
+    text-shadow: 1px 1px chocolate;
+    border-color: darkgrey;
+}
+
 .main-content {
     padding: 1em 2em;
 }

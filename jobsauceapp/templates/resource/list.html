@@ -6,12 +6,12 @@
         <h5>to enter a new study resource link <a href="{% url 'jobsauceapp:resource_form' %}">click here</a></h5>
     </div>
 
-    <ul class="col-md-6">
-    <div class="col-md-6">
+    {% comment %} <ul class="col-md-6"> {% endcomment %}
+    <div class="container col-md-6">
         {% for resource in all_resources %}
         <div>
             <p><strong>Are you ready to learn about {{resource.tech_name}}?</strong></p>
-            <button class="btn btn-danger"><a href="{{resource.link_to_resource}}">start your homework</a></button>
+            <button class="btn btn-block btn-default"><a href="{{resource.link_to_resource}}">start your homework</a></button>
             {% if resource.is_complete == "True" %}
             {% comment %} <li class="label label-default">learned something new... #sick {% endcomment %}
             {% elif resource.is_complete == "False" %}
@@ -24,16 +24,16 @@
                 <form action="{% url 'jobsauceapp:resource' resource.id %}" method="POST">
                     {% csrf_token %}
                     <input type="hidden" name="actual_method" value="DELETE">
-                    <button class="btn btn-warning">Delete</button>
+                    <button class="btn">Delete</button>
                 </form>
                 <form action="{% url 'jobsauceapp:edit' resource.id %}" method="GET">
                     {% csrf_token %}
-                    <button class="btn btn-success">Edit</button>
+                    <button class="btn">Edit</button>
                 </form>
             </section>
         </div>
         {% endfor %}
         <br></br>
     </div>
-    </ol>
+    {% comment %} </ol> {% endcomment %}
 {% endblock %}
